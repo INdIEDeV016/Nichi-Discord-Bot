@@ -1,1 +1,0 @@
-worker: gdscript Main.tscn
