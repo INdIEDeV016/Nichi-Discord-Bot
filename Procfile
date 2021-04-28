@@ -1,0 +1,1 @@
+worker: GDScript project.godot
