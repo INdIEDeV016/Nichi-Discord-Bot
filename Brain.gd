@@ -50,7 +50,7 @@ func _process(_delta : float) -> void:
 	else:
 		#If it is disconnected, try to resume
 # warning-ignore:return_value_discarded
-		client.connect_to_url("wss://gateway.discord.gg/?v=8&encoding=json")
+		client.connect_to_url("wss://gateway.discord.gg/?v=6&encoding=json")
  
 func _connection_established(protocol : String) -> void:
 	print("We are connected! Protocol: %s" % protocol)
@@ -92,7 +92,15 @@ func _data_received() -> void:
 					"op" : 2,
 					"d" : {
 						"token" : Memory.token,
-						"properties" : {}
+						"properties" : {},
+						"presence": {
+							"activities": [{
+								"name": "you. But don't be too crazy!",
+								"type": 2
+								}],
+							"status":"idle",
+							"afk":false
+						}
 					}
 				}
 			else:
@@ -104,6 +112,7 @@ func _data_received() -> void:
 			send_dictionary_as_packet(d)
 		"11": #Opcode 11 Heartbeat ACK
 			heartbeat_ack_received = true
+			print("Heartbeat")
 			print("We've received a Heartbeat ACK from the gateway.")
  
  
@@ -115,6 +124,7 @@ func _on_HeartbeatTimer_timeout() -> void: #Send Opcode 1 Heartbeat payloads eve
 	var d := {"op" : 1, "d" : last_sequence}
 	send_dictionary_as_packet(d)
 	heartbeat_ack_received = false
+	print("Heartbeat")
 	print("We've send a Heartbeat to the gateway.")
  
 func send_dictionary_as_packet(d : Dictionary) -> void:

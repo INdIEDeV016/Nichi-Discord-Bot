@@ -3,10 +3,11 @@ extends Node
 
 
 # Nichi's Memmory
-export (String) var token = "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.pVJthWwW3GxaFGA8kM2xN-zX_9Y" #Token Replaced
+export (String) var token = "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.z6G9aNnMryEeQFV_9x_cnoXB4ZE" #Token Replaced
 export (String) var prefix = "Ni, "
 var bot_command_prefix = prefix.to_upper()
 var creators_id: String = "615103137304543232"
+var bot_id = "820931768852021319"
 var default_channel_id = "824634283414782002"
 var default_guild_id = "816329865132900352"
 var headers := ["Authorization: Bot %s" % token, "Content-Type: application/json"]
@@ -27,7 +28,6 @@ var bot_commands = {
 	"GOOD MORNING":["Good Morning :blush:.\nHow do you plan to start your day today?"],
 	"GOOD NIGHT":["Good Night, Bye! :blush:\nSweet Dreams! :kissing_heart:"],
 	# Emotional commands
-	"HELP":["Yeah, What can I do for you?\nDon't ask me to lick asses alright!?"],
 	"LOL":["Ha ha! :rofl:"],
 	"NOPE":["Obey my master <@!{user_id}, he says NO!"],
 	"I LOVE YOU":["Oh, :flushed: uh.. So do I!"],
@@ -56,6 +56,51 @@ var links = ["https://c.wallhere.com/photos/ad/28/anime_girls_middle_finger-1375
 			"https://i.pinimg.com/originals/c9/d9/57/c9d9571708e9e09c6adc5ca39f037e04.jpg",
 			"https://th.bing.com/th/id/R385d4118f151275f9ce11d349a96d358?rik=JxaEt%2fF3AVF07w&riu=http%3a%2f%2fpm1.narvii.com%2f5751%2fb9e0a59ff763e0e0f61f34fb2166422769f8302c_00.jpg&ehk=AXDimOVkX5EXaDW1p4ShfgirCXdoE9VZOYy2ukpSLP0%3d&risl=&pid=ImgRaw",
 			]
+
+var slangs_list: Array = [
+	"motherfucker",
+	"madarchod",
+	"asshole",
+	"ass",
+	"fuck",
+	"saale",
+	"sexy",
+	" sex ",
+	"pee",
+	"p-p",
+	"gand mara",
+	"gaand maraa",
+	"bitch",
+	"porn",
+	"nude",
+	" lund ",
+	"cumming",
+	"cuming",
+	"BSDK",
+	"Bhosda",
+	"Bhosdike",
+	"blowjob",
+	"cunnilingus",
+	"frotage",
+	"boob",
+	"batla",
+	"Chuche",
+	"Tits",
+	"Tities",
+	"rape",
+	"Lodu Lalit",
+	"Lodu",
+	"Lawde",
+	"Lodoo",
+	"lawda",
+	"pussy",
+	"cunt",
+	"chud",
+	"chood",
+	"dick",
+	"dildo",
+	"butt",
+]
 
 func _ready():
 	randomize()
@@ -88,6 +133,9 @@ func respond_to(message: String, to: String, guild_id: String, channel_id: Strin
 		if "GIF " in main_command:
 			Processes.get_gif(main_command, channel_id, message_id)
 			return {"content":""}
+		elif "HELP" in main_command:
+			Processes.display_help(main_command, to, channel_id)
+			return {}
 		elif "DO MATH " in main_command:
 			return Processes.calculate_math(main_command)
 		elif "SAY HI TO " in main_command:
@@ -106,15 +154,34 @@ func respond_to(message: String, to: String, guild_id: String, channel_id: Strin
 		elif "KICK " in main_command or "BAN " in main_command:
 			Processes.kick_ban_user(message, guild_id, channel_id)
 			return {}
+		elif "PING " in main_command:
+			Processes.ping_100(main_command, to, channel_id)
+			return {}
+		elif "SLANG LIST " in main_command:
+			Processes.slang_list_editor(message, to)
+			return {}
 		return {"content":error_command[int(to == creators_id)].format({"user_id":to, "gratitude":gratitude})}
-	return {}
+	else:
+		var words: PoolStringArray = message.split(" ", true)
+		var slangs: PoolStringArray = []
+		for slang in slangs_list:
+			slang = slang.to_lower()
+			for word in words:
+				word = word.to_lower()
+#				print("Word: \"%s\" is similar to \"%s\" by %s%%" % [word, slang, word.similarity(slang) * 100])
+				if word.similarity(slang) >= 0.68:
+#					slangs.append(slang)
+					slangs.append(word)
+#		prints("Sending slangs:", slangs)
+		Processes.slang_smasher(message, to, channel_id, message_id, slangs)
+		return {}
 
 func learn(what: String):
 	var command = what.replacen("Ni, LEARN ", "")
 	var array: PoolStringArray = command.split(":")
 	prints("Learning:", array)
-	var emoji_modiy = [array[1].replace(";", ":")]
-	var answer = emoji_modiy
+	var emoji_modify = [array[1].replace(";", ":")]
+	var answer = emoji_modify
 	prints(command, answer)
 	bot_commands[String(array[0])] = answer
 	var f = File.new()
