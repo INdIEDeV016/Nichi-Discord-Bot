@@ -3,7 +3,7 @@ extends Node
 
 
 # Nichi's Memmory
-export (String) var token = "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.z6G9aNnMryEeQFV_9x_cnoXB4ZE" #Token Replaced
+export (String) var token = "" # Replace with your own token
 export (String) var prefix = "Ni, "
 var bot_command_prefix = prefix.to_upper()
 var creators_id: String = "615103137304543232"
