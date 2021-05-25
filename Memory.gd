@@ -37,12 +37,7 @@ var bot_commands = {
 	"GOOD JOB":["Thank You :blush:"],
 	"YOU ARE BAD":["Oh, sorry!\nI didn't mean to hurt your feelings! :cry:"],
 	"YOU ARE GOOD":["Thank You!\nEven my master <@!615103137304543232> thinks so! :blush:"],
-	# NSFW commands
-	["GAAND MARAA", "GAAND MARA", "GAND MARA"]:[":cry::sob:"],
-	"GU KHA LE":["Tu gand mara le! :unamused:"],
-	"FUCK OFF":["I'll fuck your ass, lil p-p! :rage:"],
-	"I WANNA FUCK YOU! YOU ARE SO GOOD!":["Oh, :flushed: umm... but my master <@!615103137304543232>, didn't provide me with holes. :woozy_face:\nI can't eat, drink, pee or poop.\nI do telepathy with Discord to talk to you, that's all!"],
-	# URL commands
+	
 	
 	# Rudimentary commands
 	"WHAT HAPPENED":["Nothing I guess", "I want to pee....:confounded:\nhttps://tenor.com/view/cute-tail-wagging-i-have-to-pee-pee-adorable-gif-17357349"],
@@ -58,48 +53,7 @@ var links = ["https://c.wallhere.com/photos/ad/28/anime_girls_middle_finger-1375
 			]
 
 var slangs_list: Array = [
-	"motherfucker",
-	"madarchod",
-	"asshole",
-	"ass",
-	"fuck",
-	"saale",
-	"sexy",
-	" sex ",
-	"pee",
-	"p-p",
-	"gand mara",
-	"gaand maraa",
-	"bitch",
-	"porn",
-	"nude",
-	" lund ",
-	"cumming",
-	"cuming",
-	"BSDK",
-	"Bhosda",
-	"Bhosdike",
-	"blowjob",
-	"cunnilingus",
-	"frotage",
-	"boob",
-	"batla",
-	"Chuche",
-	"Tits",
-	"Tities",
-	"rape",
-	"Lodu Lalit",
-	"Lodu",
-	"Lawde",
-	"Lodoo",
-	"lawda",
-	"pussy",
-	"cunt",
-	"chud",
-	"chood",
-	"dick",
-	"dildo",
-	"butt",
+# Add the words that you don't want to be sen in messages eg. " suck "
 ]
 
 func _ready():
