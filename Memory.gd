@@ -51,7 +51,7 @@ var links = ["https://c.wallhere.com/photos/ad/28/anime_girls_middle_finger-1375
 			]
 
 var slangs_list: Array = [
-# Add the words that you don't want to be sen in messages eg. " suck "
+# Add the words that you don't want to be seen in messages eg. " suck "
 ]
 
 func _ready():
