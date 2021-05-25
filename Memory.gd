@@ -40,10 +40,8 @@ var bot_commands = {
 	
 	
 	# Rudimentary commands
-	"WHAT HAPPENED":["Nothing I guess", "I want to pee....:confounded:\nhttps://tenor.com/view/cute-tail-wagging-i-have-to-pee-pee-adorable-gif-17357349"],
 	"SAY BYE":["Bye Bye! :wave:"],
 	"SAY HELLO TO":["Hello"],
-	"SHUTDOWN NUCLEOTECH":[".shutdown"],
 	}
 
 var links = ["https://c.wallhere.com/photos/ad/28/anime_girls_middle_finger-1375283.jpg!d",
