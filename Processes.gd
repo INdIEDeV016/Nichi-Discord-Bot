@@ -161,7 +161,7 @@ func handle_events(dict: Dictionary) -> void:
 
 
 func get_gif(command: String, channel_id: String, _message_id: String):
-	var key: String = "E1AC6IL3UDK3"
+	var key: String = " " # Enter your own Tenor API key.
 	var search = command.replacen("GIF ", "").capitalize()
 	var amount = 10
 	var err = get_node("../GIFGetter").request("https://g.tenor.com/v1/search?key={key}&q={search}&locale=hi_IN&contentfilter=off&limit={limit}".format({"key":key, "search":search, "limit":amount}))
