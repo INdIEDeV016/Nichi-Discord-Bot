@@ -1,0 +1,449 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Brain.gd" type="Script" id=1]
+[ext_resource path="res://Memory.gd" type="Script" id=2]
+[ext_resource path="res://Processes.gd" type="Script" id=3]
+[ext_resource path="res://GUI.gd" type="Script" id=4]
+[ext_resource path="res://Embed Objects/Fields.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Embed Objects/Footer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Embed Objects/Image.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Embed Objects/Thumbnail.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Embed Objects/Video.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Embed Objects/Author.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Embed Objects/Provider.tscn" type="PackedScene" id=11]
+[ext_resource path="res://EmbedPreview.tscn" type="PackedScene" id=12]
+[ext_resource path="res://EmbedPreviewHandler.gd" type="Script" id=13]
+
+[node name="Brain" type="Node"]
+script = ExtResource( 1 )
+
+[node name="HeartbeatTimer" type="Timer" parent="."]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+download_chunk_size = 16384
+use_threads = true
+
+[node name="InvalidSessionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GIFGetter" type="HTTPRequest" parent="."]
+use_threads = true
+
+[node name="Processes" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="Memory" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.145098, 0.14902, 0.227451, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 29.0
+split_offset = 568
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Console" type="TextEdit" parent="GUI/HSplitContainer"]
+margin_right = 578.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 10, 0 )
+size_flags_vertical = 3
+readonly = true
+smooth_scrolling = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GUI/HSplitContainer"]
+margin_left = 590.0
+margin_right = 995.0
+margin_bottom = 600.0
+rect_clip_content = false
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/HSplitContainer/ScrollContainer"]
+margin_right = 393.0
+margin_bottom = 898.0
+rect_min_size = Vector2( 0, 709.327 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 3
+
+[node name="SleepButton" type="Button" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer"]
+margin_right = 393.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+size_flags_horizontal = 3
+text = "Sleep/Shutdown"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CustomMessagePanel" type="PanelContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer"]
+margin_top = 43.0
+margin_right = 393.0
+margin_bottom = 219.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 386.0
+margin_bottom = 169.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer"]
+margin_right = 379.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator2" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer4"]
+margin_right = 129.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer4"]
+margin_left = 133.0
+margin_right = 246.0
+margin_bottom = 14.0
+text = "Custom Message:"
+
+[node name="HSeparator" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer4"]
+margin_left = 250.0
+margin_right = 379.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="TextEdit" type="TextEdit" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 379.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+smooth_scrolling = true
+wrap_enabled = true
+caret_blink = true
+caret_blink_speed = 0.3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer"]
+margin_top = 122.0
+margin_right = 379.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 0, 40 )
+size_flags_horizontal = 3
+custom_constants/separation = 81
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="MenuButton" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer"]
+margin_right = 149.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Ping User:"
+flat = false
+items = [ "Silent Creator", null, 0, false, false, 0, 0, null, "", false, "Major Sardine", null, 0, false, false, 1, 0, null, "", false, "INdIE DeV", null, 0, false, false, 2, 0, null, "", false, "NucleoBot", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SendButton" type="Button" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer"]
+margin_left = 230.0
+margin_right = 379.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmbedPanel" type="PanelContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer"]
+margin_top = 222.0
+margin_right = 393.0
+margin_bottom = 898.0
+rect_min_size = Vector2( 0, 555 )
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 386.0
+margin_bottom = 669.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_right = 379.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator2" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer3"]
+margin_right = 135.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer3"]
+margin_left = 139.0
+margin_right = 240.0
+margin_bottom = 14.0
+text = "Custom Embed:"
+
+[node name="HSeparator" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer3"]
+margin_left = 244.0
+margin_right = 379.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="EmbedTitle" type="LineEdit" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 379.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+placeholder_text = "Embed title here"
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 52.0
+margin_right = 379.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer2"]
+margin_right = 126.0
+margin_bottom = 14.0
+size_flags_vertical = 3
+text = "Embed Description:"
+
+[node name="HSeparator" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer2"]
+margin_left = 130.0
+margin_right = 379.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="EmbedDescription" type="TextEdit" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 70.0
+margin_right = 379.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+smooth_scrolling = true
+wrap_enabled = true
+caret_blink = true
+caret_blink_speed = 0.3
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 174.0
+margin_right = 379.0
+margin_bottom = 224.0
+size_flags_horizontal = 3
+custom_constants/separation = 87
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton2" type="MenuButton" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer5"]
+margin_right = 146.0
+margin_bottom = 50.0
+focus_mode = 2
+size_flags_horizontal = 3
+text = "Ping User:"
+flat = false
+items = [ "Silent Creator", null, 0, false, false, 0, 0, null, "", false, "Major Sardine", null, 0, false, false, 1, 0, null, "", false, "INdIE DeV", null, 0, false, false, 2, 0, null, "", false, "NucleoBot", null, 0, false, false, 3, 0, null, "", false ]
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SendEmbedButton" type="Button" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer5"]
+margin_left = 233.0
+margin_right = 379.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 100, 50 )
+size_flags_horizontal = 3
+text = "Send Embed"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 228.0
+margin_right = 379.0
+margin_bottom = 258.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer4"]
+margin_top = 8.0
+margin_right = 90.0
+margin_bottom = 22.0
+text = "Embed Fields:"
+
+[node name="HSeparator" type="HSeparator" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer4"]
+margin_left = 94.0
+margin_right = 291.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="AddFieldButton" type="Button" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer4"]
+margin_left = 295.0
+margin_right = 379.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+text = "Add Field +"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fields" type="VBoxContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 262.0
+margin_right = 379.0
+margin_bottom = 512.0
+size_flags_horizontal = 3
+
+[node name="Field" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/Fields" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 379.0
+margin_bottom = 250.0
+
+[node name="TabContainer" type="TabContainer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer"]
+margin_top = 516.0
+margin_right = 379.0
+margin_bottom = 662.0
+size_flags_horizontal = 3
+drag_to_rearrange_enabled = true
+
+[node name="Thumbnail" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 8 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Image" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 7 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Video" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 9 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Author" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 10 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_min_size = Vector2( 0, 140 )
+
+[node name="Provider" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 11 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="Footer" parent="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/TabContainer" instance=ExtResource( 6 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EmbedPreviewHandler" type="Control" parent="CanvasLayer"]
+anchor_bottom = 1.0
+margin_left = -496.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/EmbedPreviewHandler"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.14902, 0.172549, 0.231373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EmbedPreview" parent="CanvasLayer/EmbedPreviewHandler" instance=ExtResource( 12 )]
+margin_right = 493.0
+
+[node name="PreviewButton" type="Button" parent="CanvasLayer/EmbedPreviewHandler"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.51343
+margin_right = 26.4866
+text = ">>"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequests" type="Node" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="HeartbeatTimer" to="." method="_on_HeartbeatTimer_timeout"]
+[connection signal="timeout" from="InvalidSessionTimer" to="." method="_on_InvalidSessionTimer_timeout"]
+[connection signal="pressed" from="GUI/HSplitContainer/ScrollContainer/VBoxContainer/SleepButton" to="Processes" method="_on_SleepButton_pressed"]
+[connection signal="pressed" from="GUI/HSplitContainer/ScrollContainer/VBoxContainer/CustomMessagePanel/VBoxContainer/HBoxContainer/SendButton" to="GUI" method="_on_SendButton_pressed"]
+[connection signal="pressed" from="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer5/SendEmbedButton" to="GUI" method="_on_SendEmbedButton_pressed"]
+[connection signal="pressed" from="GUI/HSplitContainer/ScrollContainer/VBoxContainer/EmbedPanel/VBoxContainer/HBoxContainer4/AddFieldButton" to="GUI" method="_on_AddFieldButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/EmbedPreviewHandler/PreviewButton" to="CanvasLayer/EmbedPreviewHandler" method="_on_PreviewButton_pressed"]

@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Embed Objects/Image.gd" type="Script" id=1]
+
+[node name="EmbedImage" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 110 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_right = 92.0
+margin_bottom = 20.0
+size_flags_vertical = 3
+text = "Embed Image:"
+align = 1
+valign = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 96.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Url" type="LineEdit" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 213.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Image URL here"
+
+[node name="ProxyUrl" type="LineEdit" parent="VBoxContainer"]
+margin_top = 217.0
+margin_right = 1024.0
+margin_bottom = 406.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Image Proxy URL here"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 410.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Width" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_right = 510.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Image Width:"
+
+[node name="Height" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 514.0
+margin_right = 1024.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "Image Height:"
