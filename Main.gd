@@ -13,8 +13,9 @@ onready var server_nodes = $TabContainer/Servers
 
 func _ready() -> void:
 	bot_node.VERBOSE = true
-	bot_node
-	bot_node.login("NzUyMDMyMTU3NTgwNjU2NzUy.X1Ruhg.0vT3llF_isCAGq-00QP3ZBjwwoE", "752032157580656752")
+	var file = File.new()
+	file.open("res://token.txt", File.READ)
+	bot_node.login(file.get_as_text(), "752032157580656752")
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:

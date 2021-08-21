@@ -31,6 +31,4 @@ func _ready() -> void:
 		member_button.name = member["user"]["username"]
 		member_button.text = member["user"]["username"]
 		members_container.add_child(member_button)
-		
-		
 	
