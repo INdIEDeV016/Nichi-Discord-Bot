@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/discord_gd/discord.gd" type="Script" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Console.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Server/servers_tab.tscn" type="PackedScene" id=4]
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DiscordBot" type="HTTPRequest" parent="."]
+script = ExtResource( 1 )
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Console" parent="TabContainer" instance=ExtResource( 3 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Servers" parent="TabContainer" instance=ExtResource( 4 )]
+
+[connection signal="bot_ready" from="DiscordBot" to="." method="_on_DiscordBot_bot_ready"]
+[connection signal="event" from="DiscordBot" to="." method="_on_DiscordBot_event"]
+[connection signal="guild_create" from="DiscordBot" to="." method="_on_DiscordBot_guild_create"]
+[connection signal="interaction_create" from="DiscordBot" to="." method="_on_DiscordBot_interaction_create"]
