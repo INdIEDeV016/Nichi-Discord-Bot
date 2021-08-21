@@ -77,13 +77,13 @@ margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/MembersContainer"]
+[node name="Members" type="VBoxContainer" parent="HBoxContainer/MembersContainer"]
 margin_right = 237.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/MembersContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="HBoxContainer/MembersContainer/Members"]
 margin_right = 237.0
 margin_bottom = 14.0
 text = "Members"

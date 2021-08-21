@@ -13,7 +13,8 @@ onready var server_nodes = $TabContainer/Servers
 
 func _ready() -> void:
 	bot_node.VERBOSE = true
-	bot_node.login("ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.iwfKW4Hm_2VX4nUlIWehP7UhjdQ", "820931768852021319")
+	bot_node
+	bot_node.login("NzUyMDMyMTU3NTgwNjU2NzUy.X1Ruhg.0vT3llF_isCAGq-00QP3ZBjwwoE", "752032157580656752")
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
@@ -33,29 +34,29 @@ func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 		servers.append(bot.guilds[guild].name)
 	print("Ready on %s servers (guilds): %s and %s channels" % [bot.guilds.size(), servers,  bot.channels.size()])
 	
-	bot_node.add_application_commands(
-		{
-			'name': 'kill',
-			'description': 'This is a server Kill Switch. Only to be used by server owner!',
-			'type': 1,
-			'options': [
-				{
-					'name': 'name',
-					'type': 3,
-					'description': 'no description',
-					'required': true,
-					'choices': [
-						{
-							'name': 'NoName',
-							'value': 'NoValue'
-						}
-					]
-				}
-			],
-			'default_permission': false
-		},
-		"816329865132900352"
-	)
+#	bot_node.add_application_commands(
+#		{
+#			'name': 'kill',
+#			'description': 'This is a server Kill Switch. Only to be used by server owner!',
+#			'type': 1,
+#			'options': [
+#				{
+#					'name': 'name',
+#					'type': 3,
+#					'description': 'no description',
+#					'required': true,
+#					'choices': [
+#						{
+#							'name': 'NoName',
+#							'value': 'NoValue'
+#						}
+#					]
+#				}
+#			],
+#			'default_permission': false
+#		},
+#		"816329865132900352"
+#	)
 
 
 func _notification(what: int) -> void:
