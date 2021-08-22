@@ -28,7 +28,7 @@ signal event(bot, event)
 signal bot_ready(bot) # bot: DiscordBot
 signal guild_create(bot, guild) # bot: DiscordBot, guild: Dictionary
 signal guild_delete(bot, guild) # bot: DiscordBot, guild: Dictionary
-signal message_create(bot, message, channel) # bot: DiscordBot, message: Message, channel: Dictionary
+signal message_create(bot, message, channel, guild) # bot: DiscordBot, message: Message, channel: Dictionary
 signal message_delete(bot, message) # bot: DiscordBot, message: Dictionary
 signal interaction_create(bot, interaction) # bot: DiscordBot, interaction: DiscordInteraction
 #signal message_reaction_add(bot, reaction) # bot: DiscordBot, reaction: Dictionary
@@ -631,8 +631,11 @@ func _handle_events(dict: Dictionary) -> void:
 					return
 			
 			d = Message.new(d)
+			var guild
 			var channel = channels.get(str(d.channel_id))
-			emit_signal('message_create', self, d, channel)
+			if d.guild_id:
+				guild = guilds.get(str(d.guild_id))
+			emit_signal('message_create', self, d, channel, guild)
 		
 		'MESSAGE_DELETE':
 			var d = dict.d
