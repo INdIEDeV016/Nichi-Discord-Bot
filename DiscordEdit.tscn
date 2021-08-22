@@ -1,0 +1,146 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/GIF.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/Add.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/Sticker.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/Emoji.svg" type="Texture" id=4]
+[ext_resource path="res://DiscordEdit.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 7.0
+content_margin_right = 7.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.25098, 0.266667, 0.294118, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="CanvasItemMaterial" id=4]
+blend_mode = 1
+
+[node name="DiscordEdit" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -34.0
+rect_min_size = Vector2( 0, 34 )
+size_flags_vertical = 10
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+placeholder_text = "Message @Yourself"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 27.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 9
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttachFileButton" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+margin_right = 22.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.5
+texture_normal = ExtResource( 2 )
+expand = true
+stretch_mode = 4
+
+[node name="TextEdit" type="TextEdit" parent="PanelContainer/HBoxContainer"]
+margin_left = 31.0
+margin_right = 916.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+custom_styles/focus = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+smooth_scrolling = true
+wrap_enabled = true
+caret_blink = true
+
+[node name="Placeholder" type="Label" parent="PanelContainer/HBoxContainer/TextEdit"]
+modulate = Color( 1, 1, 1, 0.305882 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+text = "Message @Yourself"
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GIFButton" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+material = SubResource( 4 )
+margin_left = 925.0
+margin_right = 947.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.5
+texture_normal = ExtResource( 1 )
+expand = true
+stretch_mode = 4
+
+[node name="StickerButton" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+material = SubResource( 4 )
+margin_left = 956.0
+margin_right = 978.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.5
+texture_normal = ExtResource( 3 )
+expand = true
+stretch_mode = 4
+
+[node name="EmojiButton" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+material = SubResource( 4 )
+margin_left = 987.0
+margin_right = 1010.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.5
+texture_normal = ExtResource( 4 )
+expand = true
+stretch_mode = 4
+
+[connection signal="cursor_changed" from="PanelContainer/HBoxContainer/TextEdit" to="." method="_on_TextEdit_cursor_changed"]
+[connection signal="gui_input" from="PanelContainer/HBoxContainer/TextEdit" to="." method="_on_TextEdit_gui_input"]
+[connection signal="text_changed" from="PanelContainer/HBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
