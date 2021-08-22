@@ -1,6 +1,5 @@
-extends Button
+extends MenuButton
 
 
 func _ready() -> void:
 	text = name
-	toggle_mode = true

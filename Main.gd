@@ -3,7 +3,6 @@ extends Control
 
 export(PackedScene) var server_scene = preload("res://Scenes/Server/Server.tscn")
 
-var discord_bot: DiscordBot
 var current_guild_id: = ""
 var current_channel_id: = ""
 
@@ -21,7 +20,6 @@ func _ready() -> void:
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
-	discord_bot = bot
 	bot.set_presence({
 		"status": "idle",
 		"afk": false,

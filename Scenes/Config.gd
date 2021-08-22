@@ -1,22 +1,28 @@
 extends Control
 
 
-var settings: Dictionary = {}
+var settings: Dictionary = {
+	"Bot Token:": "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.V7fs4ktRU1J0frEMokMEAMkg-rU",
+	"Application ID:": "820931768852021319"
+}
 var f = ConfigFile.new()
+var file_path: String = "user://Config.cfg"
 
 onready var settings_container = $SettingsContainer
 
 
 func _ready() -> void:
-	pass
+	f.load(file_path)
 
 
 func _on_Configure_pressed() -> void:
 	for child in settings_container.get_children():
-		settings[child.get_node("Label").text] = child.get_node("LineEdit").text
+		if not child.get_node("LineEdit").text.empty():
+			settings[child.get_node("Label").text] = child.get_node("LineEdit").text
 	
 	for key in settings:
-		f.set_value("Main", key, settings[key])
-	f.save("user://Config.cfg")
+		if not settings[key].empty():
+			f.set_value("Main", key, settings[key])
+	f.save(file_path)
 	
-	owner.discord_bot.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text))
+	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text))

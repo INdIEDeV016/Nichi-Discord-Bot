@@ -1,4 +1,4 @@
-extends Button
+extends MenuButton
 
 
 func _ready() -> void:

@@ -31,7 +31,7 @@ func _ready() -> void:
 	
 	for member in guild.members:
 		var member_button = member_button_scene.instance()
-		member_button.name = member["user"]["id"]
+		member_button.name = member.user.id
 
 		if member.has("nick") and member.nick:
 			member_button.text = member.nick
