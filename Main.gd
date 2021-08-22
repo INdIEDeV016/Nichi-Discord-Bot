@@ -3,6 +3,7 @@ extends Control
 
 export(PackedScene) var server_scene = preload("res://Scenes/Server/Server.tscn")
 
+var discord_bot: DiscordBot
 var current_guild_id: = ""
 var current_channel_id: = ""
 
@@ -14,12 +15,13 @@ var servers: Dictionary = {}
 
 func _ready() -> void:
 	bot_node.VERBOSE = true
-	var file = File.new()
-	file.open("res://token.txt", File.READ)
-	bot_node.login(file.get_as_text(), "752032157580656752")
+#	var file = File.new()
+#	file.open("user://token.txt", File.READ)
+#	bot_node.login(file.get_as_text(), "752032157580656752")
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
+	discord_bot = bot
 	bot.set_presence({
 		"status": "idle",
 		"afk": false,

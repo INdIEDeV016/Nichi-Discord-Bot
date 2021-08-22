@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/discord_gd/discord.gd" type="Script" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Console.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Server/servers_tab.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Config.tscn" type="PackedScene" id=5]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -29,6 +30,8 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="Config" parent="TabContainer" instance=ExtResource( 5 )]
 
 [node name="Servers" parent="TabContainer" instance=ExtResource( 4 )]
 
