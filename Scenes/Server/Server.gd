@@ -17,28 +17,28 @@ var current_channel: String
 func _ready() -> void:
 	name = guild.name
 	
-	var channels = yield(guild.get_channels(bot), "completed")
-#	print(channels)
-	for channel in channels:
+	for channel in guild.channels:
 		var channel_button = channel_button_scene.instance()
 		channel_button.name = channel.id
+    
 		if channel.type == 4:
 			channel_button.flat = true
 			channel_button.icon = null
+                
 		channels_container.add_child(channel_button)
 		channel_button.text = channel.name
 	channels_container._reset()
 	
-	var members = guild.members
-	
-	for member in members:
+	for member in guild.members:
 		var member_button = member_button_scene.instance()
 		member_button.name = member["user"]["id"]
-		members_container.add_child(member_button)
+
 		if member.has("nick") and member.nick:
 			member_button.text = member.nick
 		else:
 			member_button.text = member.user.username
+    
+    members_container.add_child(member_button)
 	
 
 func _on_Channels_button_toggled(button_pressed, button):
