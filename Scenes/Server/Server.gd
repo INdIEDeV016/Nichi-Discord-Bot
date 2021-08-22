@@ -27,7 +27,6 @@ func _ready() -> void:
 	for member in guild.members:
 		var member_button = member_button_scene.instance()
 		member_button.name = member["user"]["username"]
-		member_button.text = member["user"]["username"]
-                
+
 		members_container.add_child(member_button)
 	
