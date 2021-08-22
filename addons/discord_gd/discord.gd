@@ -636,6 +636,7 @@ func _handle_events(dict: Dictionary) -> void:
 			if d.guild_id:
 				guild = guilds.get(str(d.guild_id))
 			emit_signal('message_create', self, d, channel, guild)
+			print(d.timestamp)
 		
 		'MESSAGE_DELETE':
 			var d = dict.d

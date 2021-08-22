@@ -58,8 +58,9 @@ func message_recieved(message, channel):
 		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		new_message.content = message.content
 		new_message.author_name = message.author.username
-		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
 		var time_zone = OS.get_time_zone_info()
-		print(time_zone)
-		new_message.time = "Today at {hour}:{minute}".format(OS.get_datetime_from_unix_time(int(message.timestamp)))
+		var date_time = Helpers.to_datetime(message.timestamp)
+		var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
+		var timestamp = OS.get_datetime_from_unix_time(current_time)
+		new_message.time = "Today at %02d:%02d" % [timestamp.hour, timestamp.minute]
 		messages_container.add_child(new_message)

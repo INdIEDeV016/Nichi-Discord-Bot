@@ -54,3 +54,15 @@ static func to_image_texture(image: Image) -> ImageTexture:
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
 	return texture
+
+static func to_datetime(iso: String):
+	var date = iso.split("T")[0]
+	var time = iso.split("T")[1]
+	return {
+		"year": date.split("-")[0], 
+		"month": date.split("-")[1], 
+		"day": date.split("-")[2],
+		"hour": time.split(":")[0],
+		"minute": time.split(":")[1],
+		"second": time.split(":")[2].split(".")[0],
+		}

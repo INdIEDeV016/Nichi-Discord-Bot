@@ -10,6 +10,7 @@ export(int) var max_visible_lines: int = 5
 export(String, MULTILINE) var text: String
 export(String) var placeholder_text: String
 export var bottom_margin: int = 8
+export var hide_icons: bool = false
 
 onready var container = $PanelContainer/HBoxContainer
 onready var add_button = $PanelContainer/HBoxContainer/AttachFileButton
@@ -22,7 +23,6 @@ onready var emoji_button = $PanelContainer/HBoxContainer/EmojiButton
 onready var height: float
 
 
-
 func _ready() -> void:
 	main_text.center_viewport_to_cursor()
 	adjust_text_nodes()
@@ -30,6 +30,8 @@ func _ready() -> void:
 	main_text.text = text
 	
 	for button in $PanelContainer/HBoxContainer.get_children():
+		if hide_icons:
+			button.hide()
 		if button is TextureButton:
 			button.connect("pressed", self, "button_clicked", [button])
 

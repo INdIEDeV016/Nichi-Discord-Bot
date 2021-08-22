@@ -101,7 +101,6 @@ func _init(message: Dictionary):
 	timestamp = message.timestamp
 
 
-
 	# Optional
 	if message.has('edited_timestamp') and message.edited_timestamp != null:
 		edited_timestamp = message.edited_timestamp
