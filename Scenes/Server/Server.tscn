@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/classes/ButtonContainer.gd" type="Script" id=1]
 [ext_resource path="res://DiscordEdit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Server/Server.gd" type="Script" id=3]
 
@@ -41,13 +40,9 @@ margin_right = 236.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-toggle_mode = true
-default = 0
-null_is_allowed = false
 
 [node name="Label2" type="Label" parent="HBoxContainer/ChannelContainer/Channels"]
 margin_right = 236.0
@@ -67,29 +62,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
-margin_right = 527.0
-margin_bottom = 551.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 20
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 10
-
-[node name="MessageContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/MarginContainer"]
-margin_left = 5.0
-margin_top = 20.0
-margin_right = 522.0
-margin_bottom = 541.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Messages" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer/MessageContainer"]
-margin_right = 517.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.1
-
 [node name="DiscordEdit" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
 anchor_top = 0.0
 anchor_right = 0.0
@@ -97,7 +69,6 @@ anchor_bottom = 0.0
 margin_top = 555.0
 margin_right = 527.0
 margin_bottom = 589.0
-size_flags_vertical = 8
 
 [node name="MembersContainer" type="ScrollContainer" parent="HBoxContainer"]
 margin_left = 771.0
@@ -118,6 +89,3 @@ margin_bottom = 14.0
 text = "Members"
 align = 1
 valign = 1
-
-[connection signal="button_toggled" from="HBoxContainer/ChannelContainer/Channels" to="." method="_on_Channels_button_toggled"]
-[connection signal="text_entered" from="HBoxContainer/VBoxContainer/DiscordEdit" to="." method="_on_DiscordEdit_text_entered"]

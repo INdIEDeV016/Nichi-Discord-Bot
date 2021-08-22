@@ -36,4 +36,3 @@ margin_bottom = -4.0
 [connection signal="event" from="DiscordBot" to="." method="_on_DiscordBot_event"]
 [connection signal="guild_create" from="DiscordBot" to="." method="_on_DiscordBot_guild_create"]
 [connection signal="interaction_create" from="DiscordBot" to="." method="_on_DiscordBot_interaction_create"]
-[connection signal="message_create" from="DiscordBot" to="." method="_on_DiscordBot_message_create"]

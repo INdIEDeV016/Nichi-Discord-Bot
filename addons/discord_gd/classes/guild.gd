@@ -40,15 +40,10 @@ var channels: Array
 var threads: Array
 var presences: Array
 
-var channels_dict: Dictionary
+
 func _init(guild: Dictionary) -> void:
 	for property in guild:
 		set(property, guild[property])
-	
-	for channel in channels:
-		channels_dict[channel.id] = channel
-	
-	
 
 
 func get_channels(bot) -> Array:
