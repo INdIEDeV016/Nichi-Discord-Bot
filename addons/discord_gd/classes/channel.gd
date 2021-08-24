@@ -13,16 +13,55 @@ var bitrate: int
 var user_limit: int
 var rate_limit_per_user: int
 
-func _init(channel: Dictionary) -> void:
-	for property in channel:
-		set(property, channel[property])
+enum Channel_Types {
+	GUILD_TEXT
+	DM
+	GUILD_VOICE
+	GROUP_DM
+	GUILD_CATEGORY
+	GUILD_NEWS
+	GUILD_STORE
+	GUILD_NEWS_THREAD = 10
+	GUILD_PUBLIC_THREAD
+	GUILD_PRIVATE_THREAD
+	GUILD_STAGE_VOICE
+}
 
-func send(bot: DiscordBot, content: String = String(), embed: Embed = null, options: Dictionary = Dictionary()):
-	print(content)
-	var payload = {
-		"content": content,
-		"files": []
-	}
-	if embed:
-		payload["embed"] = embed.to_string()
-	return bot._send_request("/channels/%s/messages" % id, payload)
+func _init(channel: Dictionary) -> void:
+	for key in channel:
+		set(key, channel[key])
+
+static func create_message(bot: DiscordBot, payload: Dictionary, channel_id: String):
+	print(payload.content) if payload.has("content") and payload.content else print()
+#	var payload = {
+#		"content": message.content,
+#		"tts": message.tts,
+#		"file": message.file,
+#		"embeds": message.embeds,
+#		"payload_json": message.payload_json,
+#		"allowed_mentions": message.allowed_mentions,
+#		"message_reference": message.message_reference,
+#		"components": message.components,
+#		"sticker_ids": message.sticker_ids
+#	}
+	
+	return yield(bot._send_request("/channels/%s/messages" % channel_id, payload), "completed")
+
+
+static func delete_message(bot: DiscordBot, message_id: String, channel_id: String):
+	return yield(bot._send_request("/channels/%s/messages/%s" % [channel_id, message_id], {}, HTTPClient.METHOD_DELETE), "completed")
+
+
+static func edit_message(bot: DiscordBot, message_id: String, channel_id: String, payload: Dictionary):
+#	var payload = {
+#		"content": message.content,
+#		"embeds": message.embeds,
+#		"flags": message.flags,
+#		"file": message.file,
+#		"payload_json": message.payload_json,
+#		"allowed_mentions": message.allowed_mentions,
+#		"attachments": message.attachments,
+#		"components": message.components
+#	}
+	
+	return yield(bot._send_request("/channels/%s/messages/%s" % [channel_id, message_id], payload, HTTPClient.METHOD_PATCH), "completed")

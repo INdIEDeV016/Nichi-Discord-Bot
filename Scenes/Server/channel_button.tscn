@@ -13,4 +13,11 @@ text = "Name"
 icon = ExtResource( 1 )
 flat = false
 expand_icon = true
+items = [ "Copy ID", null, 0, false, false, 0, 0, null, "", false ]
+switch_on_hover = true
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="about_to_show" from="." to="." method="_on_Channel_about_to_show"]

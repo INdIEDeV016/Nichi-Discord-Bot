@@ -121,6 +121,11 @@ run/main_scene="res://Main.tscn"
 config/icon="res://Nichi.png"
 config/auto_accept_quit=false
 
+[display]
+
+window/size/test_width=1600
+window/size/test_height=900
+
 [editor_plugins]
 
 enabled=PoolStringArray(  )

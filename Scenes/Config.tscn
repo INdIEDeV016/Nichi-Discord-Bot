@@ -24,14 +24,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -349.0
 margin_top = -234.0
-margin_right = 349.0
-margin_bottom = 233.0
+margin_bottom = 204.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer"]
-margin_right = 698.0
+margin_right = 349.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -40,7 +39,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="SettingsContainer/HBoxContainer"]
-margin_right = 101.0
+margin_right = 115.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -48,17 +47,17 @@ text = "Bot Token:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer"]
-margin_left = 105.0
-margin_right = 698.0
+margin_left = 119.0
+margin_right = 349.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 5.83
+size_flags_stretch_ratio = 1.98
 placeholder_text = "Bot Token here...."
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsContainer"]
 margin_top = 54.0
-margin_right = 698.0
+margin_right = 349.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -67,7 +66,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="SettingsContainer/HBoxContainer2"]
-margin_right = 101.0
+margin_right = 115.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -75,12 +74,12 @@ text = "Application ID:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer2"]
-margin_left = 105.0
-margin_right = 698.0
+margin_left = 119.0
+margin_right = 349.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 5.83
+size_flags_stretch_ratio = 1.98
 placeholder_text = "Application ID here...."
 
 [node name="Configure" type="Button" parent="."]
@@ -92,6 +91,7 @@ margin_left = -46.5
 margin_top = -96.2861
 margin_right = 46.5
 margin_bottom = -39.2861
+mouse_default_cursor_shape = 2
 text = "Configure"
 __meta__ = {
 "_edit_use_anchors_": false

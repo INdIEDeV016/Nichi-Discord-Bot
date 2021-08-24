@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/classes/ButtonContainer.gd" type="Script" id=1]
 [ext_resource path="res://DiscordEdit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Server/Server.gd" type="Script" id=3]
 
@@ -19,46 +18,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
 margin_top = 6.0
 margin_right = -8.0
 margin_bottom = -5.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = -282
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChannelContainer" type="ScrollContainer" parent="HBoxContainer"]
-margin_right = 236.0
+[node name="ChannelContainer" type="ScrollContainer" parent="HSplitContainer"]
+margin_right = 216.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Channels" type="VBoxContainer" parent="HBoxContainer/ChannelContainer"]
-margin_right = 236.0
+[node name="Channels" type="VBoxContainer" parent="HSplitContainer/ChannelContainer"]
+margin_right = 216.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-toggle_mode = true
-default = 0
-null_is_allowed = false
 
-[node name="Label2" type="Label" parent="HBoxContainer/ChannelContainer/Channels"]
-margin_right = 236.0
+[node name="Label" type="Label" parent="HSplitContainer/ChannelContainer/Channels"]
+margin_right = 216.0
 margin_bottom = 14.0
 text = "Channels"
 align = 1
 valign = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 240.0
-margin_right = 767.0
+[node name="HSplitContainer" type="HSplitContainer" parent="HSplitContainer"]
+margin_left = 228.0
+margin_right = 1008.0
+margin_bottom = 589.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MessagesContainer" type="VBoxContainer" parent="HSplitContainer/HSplitContainer"]
+margin_right = 532.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -67,8 +68,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
-margin_right = 527.0
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
+margin_right = 532.0
 margin_bottom = 551.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -77,47 +78,46 @@ custom_constants/margin_top = 20
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 10
 
-[node name="MessageContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="MessageContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MarginContainer"]
 margin_left = 5.0
 margin_top = 20.0
-margin_right = 522.0
+margin_right = 527.0
 margin_bottom = 541.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Messages" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer/MessageContainer"]
-margin_right = 517.0
+[node name="Messages" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MarginContainer/MessageContainer"]
+margin_right = 522.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.1
 
-[node name="DiscordEdit" parent="HBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="DiscordEdit" parent="HSplitContainer/HSplitContainer/MessagesContainer" instance=ExtResource( 2 )]
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 555.0
-margin_right = 527.0
+margin_right = 532.0
 margin_bottom = 589.0
 size_flags_vertical = 8
 
-[node name="MembersContainer" type="ScrollContainer" parent="HBoxContainer"]
-margin_left = 771.0
-margin_right = 1008.0
+[node name="MembersContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer"]
+margin_left = 544.0
+margin_right = 780.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Members" type="VBoxContainer" parent="HBoxContainer/MembersContainer"]
-margin_right = 237.0
+[node name="Members" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MembersContainer"]
+margin_right = 236.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/MembersContainer/Members"]
-margin_right = 237.0
+[node name="Label" type="Label" parent="HSplitContainer/HSplitContainer/MembersContainer/Members"]
+margin_right = 236.0
 margin_bottom = 14.0
 text = "Members"
 align = 1
 valign = 1
 
-[connection signal="button_toggled" from="HBoxContainer/ChannelContainer/Channels" to="." method="_on_Channels_button_toggled"]
-[connection signal="text_entered" from="HBoxContainer/VBoxContainer/DiscordEdit" to="." method="_on_DiscordEdit_text_entered"]
+[connection signal="text_entered" from="HSplitContainer/HSplitContainer/MessagesContainer/DiscordEdit" to="." method="_on_DiscordEdit_text_entered"]

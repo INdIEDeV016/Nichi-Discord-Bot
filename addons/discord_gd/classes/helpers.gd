@@ -25,6 +25,14 @@ static func make_iso_string(datetime: Dictionary = OS.get_datetime(true)) -> Str
 
 	return iso_string
 
+static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: bool = false):
+	if airport_time:
+		return "%0d:%0d" % [datetime.hour, datetime.minute]
+	else:
+		if datetime.hour > 12:
+			return "%0d:%0d PM" % [datetime.hour - 12, datetime.minute]
+		else:
+			return "%0d:%0d AM" % [datetime.hour, datetime.minute]
 
 # Pretty prints a Dictionary
 static func print_dict(d: Dictionary) -> String:

@@ -6,11 +6,16 @@
 [node name="Member" type="MenuButton"]
 anchor_right = 1.0
 margin_bottom = 40.0
+mouse_default_cursor_shape = 2
 text = "Username"
 icon = ExtResource( 1 )
 flat = false
 expand_icon = true
+items = [ "Copy ID", null, 0, false, false, 0, 0, null, "", false ]
+switch_on_hover = true
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
+
+[connection signal="about_to_show" from="." to="." method="_on_Member_about_to_show"]

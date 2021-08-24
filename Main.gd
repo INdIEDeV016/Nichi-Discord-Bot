@@ -77,15 +77,9 @@ func _on_DiscordBot_guild_create(bot: DiscordBot, guild: Guild) -> void:
 	server.bot = bot
 	servers[guild.id] = server
 	server_nodes.get_node("TabContainer").add_child(server)
-	
-	
 
 
 func _on_DiscordBot_interaction_create(bot, interaction) -> void:
-	pass # Replace with function body.
-
-
-func _on_TabContainer_tab_changed(tab: int) -> void:
 	pass # Replace with function body.
 
 
