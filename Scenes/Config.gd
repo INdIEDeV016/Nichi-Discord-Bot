@@ -1,10 +1,7 @@
 extends Control
 
 
-var settings: Dictionary = {
-	"Bot Token:": "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.V7fs4ktRU1J0frEMokMEAMkg-rU",
-	"Application ID:": "820931768852021319"
-}
+var settings: Dictionary = {}
 var f = ConfigFile.new()
 var file_path: String = "user://Config.cfg"
 
