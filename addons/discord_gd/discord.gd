@@ -12,7 +12,7 @@ For Copyright and License: See LICENSE.md
 var TOKEN: String
 var APPLICATION_ID: String
 var VERBOSE: bool = false
-var INTENTS: int = 32767
+var INTENTS: int = 32511
 
 
 # Caches

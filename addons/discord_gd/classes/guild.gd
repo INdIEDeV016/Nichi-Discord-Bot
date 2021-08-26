@@ -47,13 +47,16 @@ func _init(guild: Dictionary) -> void:
 	
 	for channel in channels:
 		channels_dict[channel.id] = channel
-	
-	
 
 
 func get_channels(bot) -> Array:
 	return yield(bot._send_get("/guilds/%s/channels" % id), "completed")
 
+func get_channel(bot, channel_id):
+	var channel = yield(bot._send_get("/channels/%s" % channel_id), "completed")
+	return Channel.new(channel)
 
-func get_members(bot) -> Array:
-	return yield(bot._send_get("/guilds/%s/members" % id), "completed")
+
+func get_members(bot, limit: int = 1, after: int = 0) -> Array:
+	limit = int(clamp(limit, 0, 1000))
+	return yield(bot._send_get("/guilds/%s/members" % id + "?limit=%d&after=%d" % [limit, after]), "completed")

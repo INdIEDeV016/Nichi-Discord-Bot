@@ -7,16 +7,15 @@ var current_guild_id: = ""
 var current_channel_id: = ""
 
 onready var bot_node = $DiscordBot
-onready var console = $TabContainer/Console/TextEdit
-onready var server_nodes = $TabContainer/Servers
+onready var tab_container = $TabContainer
+onready var console = tab_container.get_node("Console/TextEdit")
+onready var server_nodes = tab_container.get_node("Servers")
 
 var servers: Dictionary = {}
 
 func _ready() -> void:
 	bot_node.VERBOSE = true
-#	var file = File.new()
-#	file.open("user://token.txt", File.READ)
-#	bot_node.login(file.get_as_text(), "752032157580656752")
+	tab_container.current_tab = 1
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
@@ -29,7 +28,7 @@ func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 		}
 	})
 	
-	print("Logged in as %s#%s" % [bot.user.username, bot.user.discriminator])
+	print("Logged in as |%s#%s|" % [bot.user.username, bot.user.discriminator])
 	
 	var servers: Array = []
 	for guild in bot.guilds:
@@ -83,5 +82,5 @@ func _on_DiscordBot_interaction_create(bot, interaction) -> void:
 	pass # Replace with function body.
 
 
-func _on_DiscordBot_message_create(bot, message, channel, guild):
-	servers[guild.id].message_recieved(message, channel)
+func _on_DiscordBot_message_create(bot, message, channel: String, guild: String):
+	servers[guild].message_recieved(message, channel)

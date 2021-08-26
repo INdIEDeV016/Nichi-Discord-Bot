@@ -31,7 +31,8 @@ func _init(channel: Dictionary) -> void:
 	for key in channel:
 		set(key, channel[key])
 
-static func create_message(bot: DiscordBot, payload: Dictionary, channel_id: String):
+
+static func create_message(bot, payload: Dictionary, channel_id: String):
 	print(payload.content) if payload.has("content") and payload.content else print()
 #	var payload = {
 #		"content": message.content,
@@ -48,11 +49,11 @@ static func create_message(bot: DiscordBot, payload: Dictionary, channel_id: Str
 	return yield(bot._send_request("/channels/%s/messages" % channel_id, payload), "completed")
 
 
-static func delete_message(bot: DiscordBot, message_id: String, channel_id: String):
+static func delete_message(bot, message_id: String, channel_id: String):
 	return yield(bot._send_request("/channels/%s/messages/%s" % [channel_id, message_id], {}, HTTPClient.METHOD_DELETE), "completed")
 
 
-static func edit_message(bot: DiscordBot, message_id: String, channel_id: String, payload: Dictionary):
+static func edit_message(bot, message_id: String, channel_id: String, payload: Dictionary):
 #	var payload = {
 #		"content": message.content,
 #		"embeds": message.embeds,
@@ -65,3 +66,18 @@ static func edit_message(bot: DiscordBot, message_id: String, channel_id: String
 #	}
 	
 	return yield(bot._send_request("/channels/%s/messages/%s" % [channel_id, message_id], payload, HTTPClient.METHOD_PATCH), "completed")
+
+
+static func get_message(bot, message_id: String, channel_id: String) -> Dictionary:
+	return Message.new(bot, yield(bot._send_get("/channels/%s/messages/%s" % [channel_id, message_id]), "completed"))
+		
+
+static func get_messages(bot, channel_id: String, before: String) -> Array:
+	var message_array: Array = yield(bot._send_get("/channels/%s/messages" % channel_id + "?before=%s" % before), "completed")
+	
+#	var message_object_array: Array
+#	for message in message_array:
+#		var message_object = Message.new(message)
+#		message_object_array.append(message_object)
+	var invert = message_array # PLEASE REPORT: Array.invert() is not working, it returns `Nil`
+	return invert

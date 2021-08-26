@@ -14,6 +14,7 @@ var webhook_id: String
 var type: String
 
 var author: User
+var avatar: ImageTexture
 var member: Dictionary
 var activity: Dictionary
 var message_reference: Dictionary
@@ -58,7 +59,7 @@ enum Message_Types {
 	GUILD_INVITE_REMINDER
 }
 
-func _init(message: Dictionary = {}):
+func _init(bot, message: Dictionary = {}):
 	for key in message:
 		set(key, message[key])
 #	# Compulsory

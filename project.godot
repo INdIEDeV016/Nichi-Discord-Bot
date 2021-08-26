@@ -128,7 +128,7 @@ window/size/test_height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/SmoothScroll/plugin.cfg", "res://addons/discord_gd/plugin.cfg" )
 
 [gdnative]
 
@@ -137,7 +137,3 @@ singletons=[ "res://git_api.gdnlib" ]
 [physics]
 
 common/enable_pause_aware_picking=true
-
-[rendering]
-
-environment/default_environment="res://default_env.tres"

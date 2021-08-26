@@ -37,7 +37,7 @@ static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: boo
 # Pretty prints a Dictionary
 static func print_dict(d: Dictionary) -> String:
 #	print(JSON.print(d, '\t'))
-	return JSON.print(d, '\t')
+	return JSON.print(d, '\t', true)
 
 
 # Saves a Dictionary to a file for debugging large dictionaries

@@ -27,39 +27,47 @@ margin_right = -8.0
 margin_bottom = -5.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-split_offset = -282
+split_offset = -528
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ChannelContainer" type="ScrollContainer" parent="HSplitContainer"]
-margin_right = 216.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Channels" type="VBoxContainer" parent="HSplitContainer/ChannelContainer"]
-margin_right = 216.0
-margin_bottom = 589.0
+margin_right = 58.0
+margin_bottom = 577.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="HSplitContainer/ChannelContainer/Channels"]
-margin_right = 216.0
+margin_right = 58.0
 margin_bottom = 14.0
 text = "Channels"
 align = 1
 valign = 1
 
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/ChannelContainer/Channels"]
+margin_top = 18.0
+margin_right = 58.0
+margin_bottom = 22.0
+
 [node name="HSplitContainer" type="HSplitContainer" parent="HSplitContainer"]
-margin_left = 228.0
+margin_left = 12.0
 margin_right = 1008.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+split_offset = 109
 
 [node name="MessagesContainer" type="VBoxContainer" parent="HSplitContainer/HSplitContainer"]
-margin_right = 532.0
+margin_right = 790.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -68,56 +76,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
-margin_right = 532.0
+[node name="MessageContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
+margin_right = 790.0
 margin_bottom = 551.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 20
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MessageContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MarginContainer"]
-margin_left = 5.0
-margin_top = 20.0
-margin_right = 527.0
-margin_bottom = 541.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Messages" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MarginContainer/MessageContainer"]
-margin_right = 522.0
+[node name="Messages" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer"]
+margin_right = 790.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.1
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DiscordEdit" parent="HSplitContainer/HSplitContainer/MessagesContainer" instance=ExtResource( 2 )]
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 555.0
-margin_right = 532.0
+margin_right = 790.0
 margin_bottom = 589.0
 size_flags_vertical = 8
 
 [node name="MembersContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer"]
-margin_left = 544.0
-margin_right = 780.0
+margin_left = 802.0
+margin_right = 996.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Members" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MembersContainer"]
-margin_right = 236.0
+margin_right = 194.0
 margin_bottom = 589.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="HSplitContainer/HSplitContainer/MembersContainer/Members"]
-margin_right = 236.0
+margin_right = 194.0
 margin_bottom = 14.0
 text = "Members"
 align = 1
 valign = 1
+
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/HSplitContainer/MembersContainer/Members"]
+margin_top = 18.0
+margin_right = 194.0
+margin_bottom = 22.0
 
 [connection signal="text_entered" from="HSplitContainer/HSplitContainer/MessagesContainer/DiscordEdit" to="." method="_on_DiscordEdit_text_entered"]

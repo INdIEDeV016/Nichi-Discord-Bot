@@ -7,11 +7,11 @@ export var message_scene = preload("res://Scenes/Server/message.tscn")
 
 var guild: Guild
 var bot: DiscordBot
-var current_channel: String
+var current_channel: String setget set_channel
 
 onready var channels_container = $HSplitContainer/ChannelContainer/Channels
 onready var members_container = $HSplitContainer/HSplitContainer/MembersContainer/Members
-onready var messages_container = $HSplitContainer/HSplitContainer/MessagesContainer/MarginContainer/MessageContainer/Messages
+onready var messages_container = $HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer/Messages
 
 
 func _ready() -> void:
@@ -19,32 +19,41 @@ func _ready() -> void:
 	
 	for channel in guild.channels:
 		var channel_button = channel_button_scene.instance()
-		channel_button.name = channel.id
-	
-		if channel.type == Channel.Channel_Types.GUILD_CATEGORY:
-			channel_button.flat = true
-			channel_button.icon = null
-				
+		channel_button.channel = channel
 		channels_container.add_child(channel_button)
-		channel_button.text = channel.name
 	
-	for member in guild.members:
+	var members = yield(guild.get_members(bot, 1000), "completed")
+	for member in members:
 		var member_button = member_button_scene.instance()
-		member_button.name = member.user.id
-
-		if member.has("nick") and member.nick:
-			member_button.text = member.nick
-		else:
-			member_button.text = member.user.username
-	
+		member_button.member = member
+#		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
+	
+#	current_channel = guild.channels[0].id
+
+
+func set_channel(value: String) -> void:
+	for child in messages_container.get_children():
+		child.queue_free()
+	
+	current_channel = value
+	var channel = yield(guild.get_channel(bot, current_channel), "completed")
+	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
+	
+	for message in messages:
+		var message_node = message_scene.instance()
+		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
+		message_node.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
+		messages_container.add_child(message_node)
+		message_node.bot = bot
+		message_node.message = message
 
 
 func _on_DiscordEdit_text_entered(text: String):
 	if text != "":
 		Channel.create_message(bot, {"content": text}, current_channel)
 
-func message_recieved(message, channel):
+func message_recieved(message: Message, channel):
 	if current_channel == channel.id:
 		var new_message = message_scene.instance()
 		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
