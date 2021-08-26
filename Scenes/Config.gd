@@ -22,5 +22,5 @@ func _on_Configure_pressed() -> void:
 			f.set_value("Main", key, settings[key])
 	f.save(file_path)
 	
-	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text, "ODIwOTMxNzY4ODUyMDIxMzE5.YE8WSQ.GTpjNYByUN-mhsrMIneR4Kcu2A0"), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text, "820931768852021319"))
+	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text, ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text, ""))
 	get_parent().current_tab = 2
