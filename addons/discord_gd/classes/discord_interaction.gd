@@ -135,7 +135,7 @@ func _fetch_message(message_id: String = '@original'):
 	if typeof(coroutine) == TYPE_OBJECT:
 		coroutine = yield(coroutine, 'completed')
 
-	var ret = Message.new(msg)
+	var ret = Message.new(bot, msg)
 	message = ret
 	return ret
 
@@ -227,7 +227,7 @@ func _send_request(
 		if typeof(coroutine) == TYPE_OBJECT:
 			coroutine = yield(coroutine, 'completed')
 
-		return Message.new(res)
+		return Message.new(bot, res)
 
 	if _fetch_reply:
 		return yield(fetch_reply('@original'), 'completed')
@@ -262,7 +262,7 @@ func _init(_bot, interaction: Dictionary):
 		if typeof(coroutine) == TYPE_OBJECT:
 			coroutine = yield(coroutine, 'completed')
 
-		message = Message.new(interaction.message)
+		message = Message.new(bot, interaction.message)
 
 	if interaction.has('member'):
 		member = interaction.member

@@ -59,8 +59,10 @@ enum Message_Types {
 	GUILD_INVITE_REMINDER
 }
 
-func _init(bot, message: Dictionary = {}):
-	var user = User.new(bot, message["author"])
+func _init(bot, message: Dictionary):
+	var user: User
+	if message.author is Dictionary:
+		user = User.new(bot, message["author"])
 	for key in message:
 		if key == "author":
 			set("author", user)

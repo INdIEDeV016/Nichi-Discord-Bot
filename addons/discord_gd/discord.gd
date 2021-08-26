@@ -630,7 +630,7 @@ func _handle_events(dict: Dictionary) -> void:
 					# TODO: Handle sending messages in threads
 					return
 			
-			d = Message.new(d)
+			d = Message.new(self, dict.d)
 			var guild
 			var channel = channels.get(str(d.channel_id))
 			if d.guild_id:
@@ -946,7 +946,7 @@ func _send_message_request(message: Message, content, options := {}, method := H
 		if typeof(coroutine) == TYPE_OBJECT:
 			coroutine = yield(coroutine, 'completed')
 
-		var msg = Message.new(res)
+		var msg = Message.new(self, res)
 		return msg
 
 

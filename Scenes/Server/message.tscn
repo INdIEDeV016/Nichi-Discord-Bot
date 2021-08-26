@@ -16,6 +16,7 @@ fallback/1 = ExtResource( 3 )
 [node name="Message" type="PanelContainer"]
 anchor_right = 1.0
 margin_bottom = 66.0
+focus_mode = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -102,6 +103,7 @@ size_flags_vertical = 0
 [node name="Reply" type="Button" parent="HBoxContainer/HBoxContainer2"]
 margin_right = 47.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Reply"
@@ -110,6 +112,7 @@ text = "Reply"
 margin_left = 51.0
 margin_right = 87.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 toggle_mode = true
@@ -119,6 +122,7 @@ text = "Edit"
 margin_left = 91.0
 margin_right = 146.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Delete"

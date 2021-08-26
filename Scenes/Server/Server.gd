@@ -64,4 +64,5 @@ func message_recieved(message: Message, channel: Channel):
 #		print(time_zone)
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
+		new_message.grab_focus()
 		messages_container.add_child(new_message)
