@@ -43,7 +43,7 @@ margin_right = 115.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Bot Token:"
+text = "BotToken:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer"]
@@ -70,7 +70,7 @@ margin_right = 115.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Application ID:"
+text = "ApplicationID:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer2"]

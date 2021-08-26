@@ -4,6 +4,7 @@ extends PanelContainer
 var bot: DiscordBot
 var message: Dictionary setget set_message
 var id: String
+var user_id: String
 var avatar: ImageTexture
 var author_name: String
 var content: String
@@ -44,6 +45,8 @@ func set_message(value: Dictionary) -> void:
 	name_node.text = message.author.username
 	
 	time_node.text = "Today at %s" % message.edited_timestamp
+	
+	avatar_node.texture = Helpers.to_image_texture(Helpers.to_png_image(yield(bot._send_get_cdn(bot._cdn_base + "/avatars/%s/%s.png?size=%s" % [user_id, avatar, 128]), "completed")))
 
 
 func edit_mode(_bool: bool):

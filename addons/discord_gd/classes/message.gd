@@ -13,8 +13,8 @@ var edited_timestamp: String
 var webhook_id: String
 var type: String
 
-var author: User
-var avatar: ImageTexture
+var author
+var avatar
 var member: Dictionary
 var activity: Dictionary
 var message_reference: Dictionary
@@ -60,10 +60,15 @@ enum Message_Types {
 }
 
 func _init(bot, message: Dictionary = {}):
+	var user = User.new(bot, message["author"])
 	for key in message:
+		if key == "author":
+			set("author", user)
+		if key == "avatar":
+			set("avatar", Helpers.to_image_texture(Helpers.to_png_image(yield(user.get_display_avatar({"size": 128}), "completed"))))
 		set(key, message[key])
-#	# Compulsory
-##	assert(message.id, 'Message must have an id')
+	# Compulsory
+#	assert(message.id, 'Message must have an id')
 #	if message.has("id") and message.id:
 #		id = message.id
 #

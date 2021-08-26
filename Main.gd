@@ -65,7 +65,6 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 
-
 func _on_DiscordBot_event(_Wbot, event) -> void:
 	console.text += Helpers.print_dict(event if not null else "")
 

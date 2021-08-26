@@ -41,30 +41,27 @@ func set_channel(value: String) -> void:
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
 	for message in messages:
-		var message_node = message_scene.instance()
-		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
-		message_node.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
-		messages_container.add_child(message_node)
-		message_node.bot = bot
-		message_node.message = message
+		message_recieved(message, channel)
 
 
 func _on_DiscordEdit_text_entered(text: String):
 	if text != "":
 		Channel.create_message(bot, {"content": text}, current_channel)
 
-func message_recieved(message: Message, channel):
+func message_recieved(message: Message, channel: Channel):
 	if current_channel == channel.id:
 		var new_message = message_scene.instance()
-		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
-		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
+#		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
+		new_message.bot = bot
+		new_message.user_id = message.author.id
+		new_message.avatar = message.author.avatar
 		new_message.content = message.content
 		new_message.id = message.id
 		new_message.author_name = message.author.username
 		
-		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
-		var time_zone = OS.get_time_zone_info()
-		print(time_zone)
+#		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
+#		var time_zone = OS.get_time_zone_info()
+#		print(time_zone)
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
 		messages_container.add_child(new_message)
