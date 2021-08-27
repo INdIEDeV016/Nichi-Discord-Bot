@@ -2,23 +2,21 @@ extends PanelContainer
 
 
 var bot: DiscordBot
-var message: Dictionary setget set_message
-var id: String
-var user_id: String
+var message: Message setget set_message
 var avatar: ImageTexture
 var author_name: String
 var content: String
 var time: String
 
 onready var server = get_parent().owner
-onready var name_node = $HBoxContainer/VBoxContainer/HBoxContainer/Name
-onready var time_node = $HBoxContainer/VBoxContainer/HBoxContainer/Time
-onready var avatar_node = $HBoxContainer/MarginContainer/Avatar
-onready var content_node = $HBoxContainer/VBoxContainer/Content
-onready var editted_node = $HBoxContainer/VBoxContainer/HBoxContainer/Editted
-onready var text_edit = $HBoxContainer/VBoxContainer/TextEdit
+onready var name_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Name
+onready var time_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Time
+onready var avatar_node = $VBoxContainer/HBoxContainer/Avatar
+onready var content_node = $VBoxContainer/HBoxContainer/VBoxContainer/Content
+onready var editted_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Editted
+onready var text_edit = $VBoxContainer/HBoxContainer/VBoxContainer/TextEdit
+onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 
-onready var edit_button = $HBoxContainer/HBoxContainer2/Edit
 
 func _ready():
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
@@ -28,14 +26,13 @@ func _ready():
 	name_node.text = author_name
 	time_node.text = time
 	content_node.text = content
-	
 #	set_message(message)
 
 
-func set_message(value: Dictionary) -> void:
+func set_message(value: Message) -> void:
 	message = value
 	
-	id = message.id
+	name = message.id
 	
 	content_node.text = String(message.content)
 	
@@ -46,7 +43,7 @@ func set_message(value: Dictionary) -> void:
 	
 	time_node.text = "Today at %s" % message.edited_timestamp
 	
-	avatar_node.texture = Helpers.to_image_texture(Helpers.to_png_image(yield(bot._send_get_cdn(bot._cdn_base + "/avatars/%s/%s.png?size=%s" % [user_id, avatar, 128]), "completed")))
+#	avatar_node.texture = avatar
 
 
 func edit_mode(_bool: bool):
@@ -60,11 +57,10 @@ func edit_mode(_bool: bool):
 		content_node.text = text_edit.text
 		text_edit.hide()
 		editted_node.show()
-		edit_button.pressed = _bool
 
 
 func _on_Delete_pressed() -> void:
-	Channel.delete_message(server.bot, id, server.current_channel)
+	Channel.delete_message(server.bot, name, server.current_channel)
 	queue_free()
 
 
@@ -79,7 +75,7 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.scancode == KEY_ENTER and not event.shift:
 			edit_mode(false)
-			Channel.edit_message(server.bot, id, server.current_channel, {"content":text_edit.text})
+			Channel.edit_message(server.bot, name, server.current_channel, {"content":text_edit.text})
 			time_node.text = "Today at %s" % Helpers.get_time()
 
 

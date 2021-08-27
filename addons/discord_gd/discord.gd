@@ -631,6 +631,8 @@ func _handle_events(dict: Dictionary) -> void:
 					return
 			
 			d = Message.new(self, dict.d)
+			var user = User.new(self, dict.d.author)
+			d.author = user
 			var guild
 			var channel = channels.get(str(d.channel_id))
 			if d.guild_id:
@@ -797,11 +799,11 @@ func _send_get(slug, method = HTTPClient.METHOD_GET, additional_headers = []) ->
 	else: # Maybe a PUT/DELETE for reaction
 		return data[1]
 
-func _send_get_cdn(slug) -> PoolByteArray:
+func _send_get_cdn(slug: String) -> PoolByteArray:
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 
-	if slug.find('/') == 0:
+	if slug.begins_with('/'):
 		http_request.request(_cdn_base + slug, _headers)
 	else:
 		http_request.request(slug, _headers)

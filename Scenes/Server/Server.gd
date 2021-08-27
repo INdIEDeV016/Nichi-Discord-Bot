@@ -41,6 +41,7 @@ func set_channel(value: String) -> void:
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
 	for message in messages:
+		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
 
 
@@ -50,19 +51,22 @@ func _on_DiscordEdit_text_entered(text: String):
 
 func message_recieved(message: Message, channel: Channel):
 	if current_channel == channel.id:
+#		yield(get_tree(), "idle_frame")
+		if message.author is Dictionary:
+			message.author = User.new(bot, message.author)
+		
 		var new_message = message_scene.instance()
 #		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
 		new_message.bot = bot
-		new_message.user_id = message.author.id
-		new_message.avatar = message.author.avatar
+		var avatar = yield(message.author.get_display_avatar({size = 128}), "completed")
+		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		new_message.content = message.content
-		new_message.id = message.id
+		new_message.name = message.id
 		new_message.author_name = message.author.username
-		
 #		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
 #		var time_zone = OS.get_time_zone_info()
 #		print(time_zone)
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
-		new_message.grab_focus()
 		messages_container.add_child(new_message)
+		new_message.grab_focus()
