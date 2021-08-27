@@ -24,8 +24,11 @@ func _ready() -> void:
 	
 	var members = yield(guild.get_members(bot, 1000), "completed")
 	for member in members:
+		yield(get_tree(), "idle_frame")
 		var member_button = member_button_scene.instance()
 		member_button.member = member
+		var avatar = yield(member.user.get_display_avatar({size = 128}), "completed")
+		member_button.icon = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 #		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
 	
@@ -69,4 +72,4 @@ func message_recieved(message: Message, channel: Channel):
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
 		messages_container.add_child(new_message)
-		new_message.grab_focus()
+		new_message.get_parent().move_child(new_message, 0)

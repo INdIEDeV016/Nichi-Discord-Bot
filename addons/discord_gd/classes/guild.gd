@@ -58,4 +58,8 @@ func get_channel(bot, channel_id):
 
 
 func get_members(bot, limit: int = 1000, after: int = 0) -> Array:
-	return yield(bot._send_get("/guilds/%s/members" % id + "?limit=%d&after=%d" % [limit, after]), "completed")
+	var members: Array = yield(bot._send_get("/guilds/%s/members" % id + "?limit=%d&after=%d" % [limit, after]), "completed")
+	
+	for member in members:
+		member.user = User.new(bot, member.user)
+	return members

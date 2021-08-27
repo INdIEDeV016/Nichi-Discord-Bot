@@ -631,12 +631,10 @@ func _handle_events(dict: Dictionary) -> void:
 					return
 			
 			d = Message.new(self, dict.d)
-			var user = User.new(self, dict.d.author)
-			d.author = user
 			var guild
-			var channel = channels.get(str(d.channel_id))
+			var channel = Channel.new(channels.get(str(d.channel_id)))
 			if d.guild_id:
-				guild = guilds.get(str(d.guild_id))
+				guild = Guild.new(guilds.get(str(d.guild_id)))
 			emit_signal('message_create', self, d, channel, guild)
 		
 		'MESSAGE_DELETE':

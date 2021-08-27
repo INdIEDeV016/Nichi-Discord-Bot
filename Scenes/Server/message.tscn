@@ -12,6 +12,10 @@ content_margin_right = 10.0
 content_margin_top = 10.0
 content_margin_bottom = 10.0
 bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="DynamicFont" id=1]
 use_mipmaps = true
@@ -20,7 +24,7 @@ font_data = ExtResource( 5 )
 fallback/0 = ExtResource( 4 )
 fallback/1 = ExtResource( 3 )
 
-[node name="Message" type="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer"]
 anchor_right = 1.0
 margin_bottom = 66.0
 focus_mode = 2
@@ -154,8 +158,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Delete"
 
-[connection signal="mouse_entered" from="." to="." method="_on_Message_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_Message_mouse_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_PanelContainer_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_PanelContainer_mouse_exited"]
 [connection signal="gui_input" from="VBoxContainer/HBoxContainer/VBoxContainer/TextEdit" to="." method="_on_TextEdit_gui_input"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HBoxContainer2/Reply" to="." method="_on_Reply_pressed"]
 [connection signal="toggled" from="VBoxContainer/HBoxContainer/HBoxContainer2/Edit" to="." method="_on_Edit_toggled"]

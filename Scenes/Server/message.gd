@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Control
 
 
 var bot: DiscordBot
@@ -20,12 +20,13 @@ onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 
 func _ready():
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
-	edit_mode(false)
-	get_parent().move_child(self, 0)
+	edit_mode(edit_button.pressed)
 	avatar_node.texture = avatar
 	name_node.text = author_name
 	time_node.text = time
 	content_node.text = content
+	
+	get_parent().get_child(get_parent().get_child_count() - 1).grab_focus()
 #	set_message(message)
 
 
@@ -51,12 +52,12 @@ func edit_mode(_bool: bool):
 		content_node.hide()
 		text_edit.text = content_node.text
 		text_edit.show()
-		editted_node.hide()
+		editted_node.show()
 	else:
 		content_node.show()
 		content_node.text = text_edit.text
 		text_edit.hide()
-		editted_node.show()
+		editted_node.hide()
 
 
 func _on_Delete_pressed() -> void:
@@ -79,9 +80,9 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 			time_node.text = "Today at %s" % Helpers.get_time()
 
 
-func _on_Message_mouse_entered() -> void:
-	self_modulate = Color(0.196078, 0.207843, 0.231373)
-
-
-func _on_Message_mouse_exited() -> void:
+func _on_PanelContainer_mouse_exited() -> void:
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
+
+
+func _on_PanelContainer_mouse_entered() -> void:
+	self_modulate = Color(0.196078, 0.207843, 0.231373)

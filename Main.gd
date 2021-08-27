@@ -81,5 +81,5 @@ func _on_DiscordBot_interaction_create(bot, interaction) -> void:
 	pass # Replace with function body.
 
 
-func _on_DiscordBot_message_create(bot, message, channel: String, guild: String):
-	servers[guild].message_recieved(message, channel)
+func _on_DiscordBot_message_create(bot, message, channel: Channel, guild: Guild):
+	servers[guild.id].message_recieved(message, channel)
