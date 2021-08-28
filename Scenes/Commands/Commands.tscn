@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Commands/Commands.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Commands/Command.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/Quicksand/static/Quicksand-Medium.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Commands" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -279.5
+margin_top = 7.41624
+margin_right = 279.5
+margin_bottom = 57.4162
+custom_fonts/font = SubResource( 1 )
+text = "Create your Slash Commands"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 116.0
+margin_top = 68.0
+margin_right = -115.0
+margin_bottom = -68.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+margin_right = 390.0
+margin_bottom = 464.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Command" parent="HSplitContainer/ScrollContainer" instance=ExtResource( 2 )]
+margin_right = 390.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer"]
+margin_left = 402.0
+margin_right = 793.0
+margin_bottom = 464.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "Description"
+text = "Description"

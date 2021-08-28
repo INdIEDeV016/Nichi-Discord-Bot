@@ -111,6 +111,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 text = "Hello! How are you?"
+autowrap = true
 
 [node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 visible = false

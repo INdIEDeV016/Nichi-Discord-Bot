@@ -19,14 +19,23 @@ onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 
 
 func _ready():
+	GlobalTween.make_tween(
+		self, "rect_scale",
+		Vector2.ZERO, Vector2.ONE,
+		0.5,
+		Tween.TRANS_BACK, Tween.EASE_OUT
+	)
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
 	edit_mode(edit_button.pressed)
+	editted_node.hide()
 	avatar_node.texture = avatar
 	name_node.text = author_name
 	time_node.text = time
 	content_node.text = content
 	
-	get_parent().get_child(get_parent().get_child_count() - 1).grab_focus()
+	get_parent().move_child(self, get_parent().get_child_count() - 1)
+	yield(get_tree(), "idle_frame")
+	grab_focus()
 #	set_message(message)
 
 
@@ -57,7 +66,6 @@ func edit_mode(_bool: bool):
 		content_node.show()
 		content_node.text = text_edit.text
 		text_edit.hide()
-		editted_node.hide()
 
 
 func _on_Delete_pressed() -> void:

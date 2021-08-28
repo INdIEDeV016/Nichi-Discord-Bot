@@ -6,7 +6,14 @@ onready var popup = $PopupMenu
 
 
 func _ready() -> void:
-	pass
+	rect_scale = Vector2.ZERO
+	GlobalTween.make_tween(
+		self, "rect_scale",
+		Vector2.ZERO, Vector2.ONE,
+		0.5,
+		Tween.TRANS_BACK, Tween.EASE_OUT
+	)
+
 
 func set_member(value: Dictionary) -> void:
 	member = value

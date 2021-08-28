@@ -22,65 +22,244 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -349.0
-margin_top = -234.0
-margin_bottom = 204.0
+margin_left = -307.0
+margin_top = -219.0
+margin_right = 308.0
+margin_bottom = 191.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer"]
-margin_right = 349.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 0, 50 )
+margin_right = 615.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="SettingsContainer/HBoxContainer"]
-margin_right = 115.0
-margin_bottom = 50.0
+margin_right = 205.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "BotToken:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer"]
-margin_left = 119.0
-margin_right = 349.0
-margin_bottom = 50.0
+margin_left = 209.0
+margin_right = 615.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Bot Token here...."
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsContainer"]
-margin_top = 54.0
-margin_right = 349.0
-margin_bottom = 104.0
-rect_min_size = Vector2( 0, 50 )
+margin_top = 49.0
+margin_right = 615.0
+margin_bottom = 94.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="SettingsContainer/HBoxContainer2"]
-margin_right = 115.0
-margin_bottom = 50.0
+margin_right = 205.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "ApplicationID:"
 valign = 1
 
 [node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer2"]
-margin_left = 119.0
-margin_right = 349.0
-margin_bottom = 50.0
+margin_left = 209.0
+margin_right = 615.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Application ID here...."
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="SettingsContainer"]
+margin_top = 98.0
+margin_right = 615.0
+margin_bottom = 144.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsContainer/HBoxContainer3"]
+margin_right = 205.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Intents:"
+valign = 1
+
+[node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer3"]
+margin_left = 209.0
+margin_right = 615.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.98
+placeholder_text = "Intents here...."
+
+[node name="HSeparator" type="HSeparator" parent="SettingsContainer"]
+margin_top = 148.0
+margin_right = 615.0
+margin_bottom = 152.0
+
+[node name="Label" type="Label" parent="SettingsContainer"]
+margin_left = 276.0
+margin_top = 156.0
+margin_right = 339.0
+margin_bottom = 170.0
+size_flags_horizontal = 4
+text = "Presence:"
+
+[node name="HSeparator2" type="HSeparator" parent="SettingsContainer"]
+margin_left = 157.0
+margin_top = 174.0
+margin_right = 457.0
+margin_bottom = 178.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 4
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="SettingsContainer"]
+margin_top = 182.0
+margin_right = 615.0
+margin_bottom = 227.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsContainer/HBoxContainer4"]
+margin_right = 305.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Status:"
+valign = 1
+
+[node name="OptionButton" type="OptionButton" parent="SettingsContainer/HBoxContainer4"]
+margin_left = 309.0
+margin_right = 615.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Online"
+items = [ "Online", null, false, 0, null, "Idle", null, false, 1, null, "DND", null, false, 2, null, "Invisible", null, false, 3, null ]
+selected = 0
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="SettingsContainer"]
+margin_top = 231.0
+margin_right = 615.0
+margin_bottom = 277.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsContainer/HBoxContainer5"]
+margin_right = 305.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "AFK:"
+valign = 1
+
+[node name="CheckBox" type="CheckBox" parent="SettingsContainer/HBoxContainer5"]
+margin_left = 309.0
+margin_right = 615.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "YES"
+
+[node name="HSeparator4" type="HSeparator" parent="SettingsContainer"]
+margin_top = 281.0
+margin_right = 615.0
+margin_bottom = 285.0
+
+[node name="Label2" type="Label" parent="SettingsContainer"]
+margin_left = 281.0
+margin_top = 289.0
+margin_right = 333.0
+margin_bottom = 303.0
+size_flags_horizontal = 4
+text = "Activity:"
+
+[node name="HSeparator3" type="HSeparator" parent="SettingsContainer"]
+margin_left = 157.0
+margin_top = 307.0
+margin_right = 457.0
+margin_bottom = 311.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 4
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="SettingsContainer"]
+margin_top = 315.0
+margin_right = 615.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsContainer/HBoxContainer6"]
+margin_right = 305.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Type:"
+valign = 1
+
+[node name="OptionButton" type="OptionButton" parent="SettingsContainer/HBoxContainer6"]
+margin_left = 309.0
+margin_right = 615.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Game"
+items = [ "Game", null, false, 0, null, "Streaming", null, false, 1, null, "Listening", null, false, 2, null, "Watching", null, false, 3, null, "Competing", null, false, 4, null, "Custom", null, false, 5, null ]
+selected = 0
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="SettingsContainer"]
+margin_top = 364.0
+margin_right = 615.0
+margin_bottom = 410.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="SettingsContainer/HBoxContainer7"]
+margin_right = 205.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Name:"
+valign = 1
+
+[node name="LineEdit" type="LineEdit" parent="SettingsContainer/HBoxContainer7"]
+margin_left = 209.0
+margin_right = 615.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.98
+placeholder_text = "Value here...."
 
 [node name="Configure" type="Button" parent="."]
 anchor_left = 0.5

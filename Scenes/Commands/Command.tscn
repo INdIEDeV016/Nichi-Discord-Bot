@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Commands/Options.tscn" type="PackedScene" id=1]
+
+[node name="Command" type="PanelContainer"]
+margin_right = 466.0
+margin_bottom = 282.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 459.0
+margin_bottom = 275.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+margin_right = 452.0
+margin_bottom = 24.0
+placeholder_text = "Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer"]
+margin_top = 28.0
+margin_right = 452.0
+margin_bottom = 52.0
+placeholder_text = "Description"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 56.0
+margin_right = 452.0
+margin_bottom = 268.0

@@ -72,4 +72,4 @@ func message_recieved(message: Message, channel: Channel):
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
 		messages_container.add_child(new_message)
-		new_message.get_parent().move_child(new_message, 0)
+#		new_message.get_parent().move_child(new_message, 0)

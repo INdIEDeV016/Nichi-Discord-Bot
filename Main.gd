@@ -19,15 +19,6 @@ func _ready() -> void:
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
-	bot.set_presence({
-		"status": "idle",
-		"afk": false,
-		"activity": {
-			"type": "listening",
-			"name": "you. Please be sane",
-		}
-	})
-	
 	print("Logged in as |%s#%s|" % [bot.user.username, bot.user.discriminator])
 	
 	var servers: Array = []
@@ -60,11 +51,6 @@ func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 #	)
 
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_QUIT_REQUEST:
-		get_tree().quit()
-
-
 func _on_DiscordBot_event(_Wbot, event) -> void:
 	console.text += Helpers.print_dict(event if not null else "")
 
@@ -77,9 +63,14 @@ func _on_DiscordBot_guild_create(bot: DiscordBot, guild: Guild) -> void:
 	server_nodes.get_node("TabContainer").add_child(server)
 
 
-func _on_DiscordBot_interaction_create(bot, interaction) -> void:
+func _on_DiscordBot_interaction_create(bot, interaction: DiscordInteraction) -> void:
 	pass # Replace with function body.
 
 
 func _on_DiscordBot_message_create(bot, message, channel: Channel, guild: Guild):
 	servers[guild.id].message_recieved(message, channel)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		get_tree().quit()
