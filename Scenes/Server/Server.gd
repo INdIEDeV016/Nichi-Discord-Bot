@@ -80,12 +80,13 @@ func message_recieved(message: Message, channel: Channel):
 
 
 func set_typing(bot, dict: Dictionary):
-	timer.start()
-	if dict.member.has("nick") and dict.member.nick:
-		typing_label.text = "%s is typing..." % dict.member.nick
-	elif dict.member.user.has("username") and dict.member.user.username:
-		typing_label.text = "%s is typing..." % dict.member.user.username
-	typing_label.show()
+	if current_channel == dict.channel_id:
+		timer.start()
+		if dict.member.has("nick") and dict.member.nick:
+			typing_label.text = "%s is typing..." % dict.member.nick
+		elif dict.member.user.has("username") and dict.member.user.username:
+			typing_label.text = "%s is typing..." % dict.member.user.username
+		typing_label.show()
 
 
 func _on_Timer_timeout() -> void:
