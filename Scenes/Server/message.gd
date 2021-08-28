@@ -13,7 +13,7 @@ onready var name_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer
 onready var time_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Time
 onready var avatar_node = $VBoxContainer/HBoxContainer/Avatar
 onready var content_node = $VBoxContainer/HBoxContainer/VBoxContainer/Content
-onready var editted_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Editted
+onready var edited_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Editted
 onready var text_edit = $VBoxContainer/HBoxContainer/VBoxContainer/TextEdit
 onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 
@@ -21,7 +21,7 @@ onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 func _ready():
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
 	edit_mode(edit_button.pressed)
-	editted_node.hide()
+	edited_node.hide()
 	avatar_node.texture = avatar
 	name_node.text = author_name
 	time_node.text = time
@@ -63,7 +63,7 @@ func edit_mode(_bool: bool):
 		content_node.hide()
 		text_edit.text = content_node.text
 		text_edit.show()
-		editted_node.show()
+		edited_node.show()
 	else:
 		content_node.show()
 		content_node.text = text_edit.text

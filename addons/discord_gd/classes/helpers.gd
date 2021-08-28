@@ -27,12 +27,24 @@ static func make_iso_string(datetime: Dictionary = OS.get_datetime(true)) -> Str
 
 static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: bool = false):
 	if airport_time:
-		return "%0d:%0d" % [datetime.hour, datetime.minute]
+		return "%02d:%02d" % [datetime.hour, datetime.minute]
 	else:
 		if datetime.hour > 12:
-			return "%0d:%0d PM" % [datetime.hour - 12, datetime.minute]
+			return "%02d:%02d PM" % [datetime.hour - 12, datetime.minute]
 		else:
-			return "%0d:%0d AM" % [datetime.hour, datetime.minute]
+			return "%02d:%02d AM" % [datetime.hour, datetime.minute]
+
+static func to_datetime(iso: String):
+	var date = iso.split("T")[0]
+	var time = iso.split("T")[1]
+	return {
+		"year": date.split("-")[0], 
+		"month": date.split("-")[1], 
+		"day": date.split("-")[2],
+		"hour": time.split(":")[0],
+		"minute": time.split(":")[1],
+		"second": time.split(":")[2].split(".")[0],
+		}
 
 # Pretty prints a Dictionary
 static func print_dict(d: Dictionary) -> String:

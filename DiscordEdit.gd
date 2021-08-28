@@ -5,6 +5,7 @@ class_name DiscordEdit, "res://Assets/TextEdit.svg"
 signal button_pressed(button)
 signal text_entered(text)
 signal size_changed(value)
+signal text_changed(text)
 
 export(int) var max_visible_lines: int = 5
 export(String, MULTILINE) var text: String
@@ -82,3 +83,6 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 		if event.scancode == KEY_ENTER and event.shift == false and not event.echo:
 			emit_signal("text_entered", text)
 			main_text.text = ""
+		if event.scancode != KEY_ENTER and event.shift == false and not event.echo:
+			emit_signal("text_changed", text)
+			

@@ -28,7 +28,8 @@ func _ready() -> void:
 	for member in members:
 		yield(get_tree(), "idle_frame")
 		var member_button = member_button_scene.instance()
-		member_button.member = member
+#		print(member)
+		member_button.member = member.duplicate()
 		var avatar = yield(member.user.get_display_avatar({size = 128}), "completed")
 		member_button.icon = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 #		yield(get_tree(), "idle_frame")
@@ -65,22 +66,23 @@ func message_recieved(message: Message, channel: Channel):
 		var new_message = message_scene.instance()
 #		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
 		new_message.bot = bot
-		var avatar = yield(message.author.get_display_avatar({size = 128}), "completed")
+		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed") # this is what Godot Docs say to use.
 		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		new_message.content = message.content
 		new_message.name = message.id
 		new_message.author_name = message.author.username
-#		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
-#		var time_zone = OS.get_time_zone_info()
-#		print(time_zone)
-		
-		new_message.time = "Today at %s" % Helpers.get_time()
-		messages_container.add_child(new_message)
-#		new_message.get_parent().move_child(new_message, 0)
+		var time_zone = OS.get_time_zone_info()
+		var date_time = Helpers.to_datetime(message.timestamp)
+		var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
+		var timestamp = OS.get_datetime_from_unix_time(current_time)
+		new_message.time = "Today at %s" % Helpers.get_time(timestamp)
+		messages_container.call_deferred("add_child", new_message)
+		print("not adding instance", new_message.content)
+#		messages_container.call_deferred("move_child", new_message, messages_container.get_child_count()-1)
 
 
 func set_typing(bot, dict: Dictionary):
-	if current_channel == dict.channel_id:
+	if current_channel == dict.channel_id and dict.member.user.id != bot.user.id:
 		timer.start()
 		if dict.member.has("nick") and dict.member.nick:
 			typing_label.text = "%s is typing..." % dict.member.nick
@@ -91,3 +93,7 @@ func set_typing(bot, dict: Dictionary):
 
 func _on_Timer_timeout() -> void:
 	typing_label.hide()
+
+
+func _on_DiscordEdit_text_changed(text):
+	Channel.send_typing(bot, current_channel)
