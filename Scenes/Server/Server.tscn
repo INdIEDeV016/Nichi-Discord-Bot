@@ -106,6 +106,13 @@ margin_right = 790.0
 margin_bottom = 589.0
 size_flags_vertical = 8
 
+[node name="Typing" type="Label" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
+visible = false
+margin_top = 575.0
+margin_right = 790.0
+margin_bottom = 589.0
+text = "@%s is typing..."
+
 [node name="MembersContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer"]
 margin_left = 802.0
 margin_right = 996.0
@@ -134,4 +141,9 @@ margin_top = 18.0
 margin_right = 194.0
 margin_bottom = 22.0
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="text_entered" from="HSplitContainer/HSplitContainer/MessagesContainer/DiscordEdit" to="." method="_on_DiscordEdit_text_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

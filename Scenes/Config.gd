@@ -16,6 +16,7 @@ func _ready() -> void:
 
 
 func _on_Configure_pressed() -> void:
+#	yield(settings_container, "ready")
 	for child in settings_container.get_children():
 		if child.get_child(1) is LineEdit and not child.get_node("LineEdit").text.empty():
 			settings[child.get_node("Label").text] = child.get_node("LineEdit").text
@@ -30,14 +31,14 @@ func _on_Configure_pressed() -> void:
 	f.save(file_path)
 	
 	f.load(file_path)
-	owner.bot_node.INTENTS = settings.Intents
+	owner.bot_node.INTENTS = settings.Intents if settings.has("Intents") else 32383
 	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text, ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text, ""))
 	owner.bot_node.set_presence({
-		"status": settings.Status,
-		"afk": settings.AFK,
+		"status": settings.Status if settings.has("Status") else "idle",
+		"afk": settings.AFK if settings.has("AFK") else false,
 		"activity": {
-			"type": settings.Type,
-			"name": settings.Name,
+			"type": settings.Type if settings.has("Type") else "listening",
+			"name": settings.Name if settings.has("Name") else "you. Please be sane!",
 		}
 	})
 	get_parent().current_tab = 2

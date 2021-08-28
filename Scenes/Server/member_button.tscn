@@ -18,8 +18,8 @@ __meta__ = {
 }
 
 [node name="PopupMenu" type="PopupMenu" parent="."]
-margin_right = 20.0
-margin_bottom = 20.0
+margin_right = 145.0
+margin_bottom = 209.0
 items = [ "Copy ID", null, 0, false, false, 0, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Kick", null, 0, false, false, 1, 0, null, "", false, "Ban", null, 0, false, false, 2, 0, null, "", false ]
 
 [connection signal="gui_input" from="." to="." method="_on_Member_gui_input"]

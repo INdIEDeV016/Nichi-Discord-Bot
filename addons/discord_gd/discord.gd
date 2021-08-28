@@ -31,6 +31,7 @@ signal guild_delete(bot, guild) # bot: DiscordBot, guild: Dictionary
 signal message_create(bot, message, channel, guild) # bot: DiscordBot, message: Message, channel: Dictionary
 signal message_delete(bot, message) # bot: DiscordBot, message: Dictionary
 signal interaction_create(bot, interaction) # bot: DiscordBot, interaction: DiscordInteraction
+signal typing_start(bot, dict)
 #signal message_reaction_add(bot, reaction) # bot: DiscordBot, reaction: Dictionary
 #signal message_reaction_remove(bot, reaction) # bot: DiscordBot, reaction: Dictionary
 
@@ -640,6 +641,13 @@ func _handle_events(dict: Dictionary) -> void:
 		'MESSAGE_DELETE':
 			var d = dict.d
 			emit_signal('message_delete', self, d)
+		
+		'PRESENCE_UPDATE':
+			pass
+		
+		'TYPING_START':
+			var dictionary = dict.d
+			emit_signal("typing_start", self, dictionary)
 
 
 func _send_raw_request(slug: String, payload: Dictionary, method = HTTPClient.METHOD_POST):

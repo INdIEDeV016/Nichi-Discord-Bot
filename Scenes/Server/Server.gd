@@ -12,6 +12,8 @@ var current_channel: String setget set_channel
 onready var channels_container = $HSplitContainer/ChannelContainer/Channels
 onready var members_container = $HSplitContainer/HSplitContainer/MembersContainer/Members
 onready var messages_container = $HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer/Messages
+onready var typing_label = $HSplitContainer/HSplitContainer/MessagesContainer/Typing
+onready var timer = $Timer
 
 
 func _ready() -> void:
@@ -32,6 +34,7 @@ func _ready() -> void:
 #		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
 	
+	bot.connect("typing_start", self, "set_typing")
 #	current_channel = guild.channels[0].id
 
 
@@ -53,6 +56,7 @@ func _on_DiscordEdit_text_entered(text: String):
 		Channel.create_message(bot, {"content": text}, current_channel)
 
 func message_recieved(message: Message, channel: Channel):
+	typing_label.hide()
 	if current_channel == channel.id:
 #		yield(get_tree(), "idle_frame")
 		if message.author is Dictionary:
@@ -73,3 +77,16 @@ func message_recieved(message: Message, channel: Channel):
 		new_message.time = "Today at %s" % Helpers.get_time()
 		messages_container.add_child(new_message)
 #		new_message.get_parent().move_child(new_message, 0)
+
+
+func set_typing(bot, dict: Dictionary):
+	timer.start()
+	if dict.member.has("nick") and dict.member.nick:
+		typing_label.text = "%s is typing..." % dict.member.nick
+	elif dict.member.user.has("username") and dict.member.user.username:
+		typing_label.text = "%s is typing..." % dict.member.user.username
+	typing_label.show()
+
+
+func _on_Timer_timeout() -> void:
+	typing_label.hide()
