@@ -34,6 +34,9 @@ static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: boo
 		else:
 			return "%02d:%02d AM" % [datetime.hour, datetime.minute]
 
+static func get_date(datetime: Dictionary = OS.get_datetime()):
+	return "%02d/%02d/%02d" % [datetime.day, datetime.month, datetime.year]
+
 static func to_datetime(iso: String):
 	var date = iso.split("T")[0]
 	var time = iso.split("T")[1]

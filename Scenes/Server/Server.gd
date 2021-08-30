@@ -75,7 +75,7 @@ func message_recieved(message: Message, channel: Channel):
 		var date_time = Helpers.to_datetime(message.timestamp)
 		var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
 		var timestamp = OS.get_datetime_from_unix_time(current_time)
-		new_message.time = "Today at %s" % Helpers.get_time(timestamp)
+		new_message.time = "%s %s" % [Helpers.get_date(timestamp), Helpers.get_time(timestamp)]
 		messages_container.call_deferred("add_child", new_message)
 		print("not adding instance", new_message.content)
 #		messages_container.call_deferred("move_child", new_message, messages_container.get_child_count()-1)
