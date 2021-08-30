@@ -54,11 +54,8 @@ func set_message(value: Message) -> void:
 	
 	time_node.text = "Today at %s" % message.edited_timestamp
 	
-	var dict: Dictionary
-	for key in message.get_property_list():
-		dict[key] = message.get(str(key))
-	
-	hint_tooltip = Helpers.print_dict(dict)
+	var dict = message
+	hint_tooltip = message.print()
 
 
 func edit_mode(_bool: bool):

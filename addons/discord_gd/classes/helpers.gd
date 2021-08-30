@@ -35,7 +35,7 @@ static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: boo
 			return "%0d:%0d AM" % [datetime.hour, datetime.minute]
 
 # Pretty prints a Dictionary
-static func print_dict(d: Dictionary) -> String:
+static func print_dict(d) -> String:
 #	print(JSON.print(d, '\t'))
 	return JSON.print(d, '\t', true)
 

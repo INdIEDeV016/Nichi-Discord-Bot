@@ -28,9 +28,9 @@ func _ready() -> void:
 	for member in members:
 		yield(get_tree(), "idle_frame")
 		var member_button = member_button_scene.instance()
-		member_button.member = member
 		var avatar = yield(member.user.get_display_avatar({size = 128}), "completed")
 		member_button.icon = Helpers.to_image_texture(Helpers.to_png_image(avatar))
+		member_button.member = member
 #		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
 	
@@ -43,12 +43,15 @@ func set_channel(value: String) -> void:
 	for child in messages_container.get_children():
 		child.queue_free()
 	
-	var channel = yield(guild.get_channel(bot, current_channel), "completed")
+	var channel: Channel = yield(guild.get_channel(bot, current_channel), "completed")
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
 	for message in messages:
 		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
+	
+#	var last_message: Message = yield(channel.get_message(bot, channel.last_message_id, channel.id), "completed")
+#	message_recieved(last_message, channel)
 
 
 func _on_DiscordEdit_text_entered(text: String):

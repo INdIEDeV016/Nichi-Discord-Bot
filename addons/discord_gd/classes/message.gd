@@ -151,7 +151,7 @@ func _to_string(pretty: bool = false):
 		'id': id,
 		'channel_id': channel_id,
 		'guild_id': guild_id,
-		'author': author,
+		'author': parse_json(author.to_string()),
 		'member': member,
 		'content': content,
 		'timestamp': timestamp,
@@ -168,13 +168,13 @@ func _to_string(pretty: bool = false):
 		'type': type,
 		'message_reference': message_reference,
 		'referenced_message': referenced_message,
-		'flags': flags.bitfield
 	}
-
-	return JSON.print(data, '\t') if pretty else JSON.print(data)
+	
+	return JSON.print(data, '\t', true) if pretty else JSON.print(data, '', true)
 
 func print():
 	print(_to_string(true))
+	return _to_string(true)
 
 func has(attribute):
 	return true if self[attribute] else false

@@ -14,13 +14,14 @@ func _ready() -> void:
 func set_channel(value: Dictionary):
 	channel = value
 	name = channel.id
-	hint_tooltip = Helpers.print_dict(channel)
 	
 	if channel.type == Channel.Channel_Types.GUILD_CATEGORY:
 		flat = true
 		icon = null
 	
 	text = channel.name
+	var dict = channel
+	hint_tooltip = Helpers.print_dict(dict)
 
 
 func _on_PopupMenu_about_to_show() -> void:

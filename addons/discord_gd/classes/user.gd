@@ -157,4 +157,5 @@ func _to_string(pretty: bool = false):
 	return JSON.print(data, '\t') if pretty else JSON.print(data)
 
 func print():
-	print(_to_string(true))
+#	print(_to_string(true))
+	return _to_string(true)
