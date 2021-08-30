@@ -40,10 +40,10 @@ func _ready() -> void:
 
 
 func set_channel(value: String) -> void:
+	current_channel = value
 	for child in messages_container.get_children():
 		child.queue_free()
 	
-	current_channel = value
 	var channel = yield(guild.get_channel(bot, current_channel), "completed")
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
@@ -76,9 +76,10 @@ func message_recieved(message: Message, channel: Channel):
 		var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
 		var timestamp = OS.get_datetime_from_unix_time(current_time)
 		new_message.time = "%s %s" % [Helpers.get_date(timestamp), Helpers.get_time(timestamp)]
-		messages_container.call_deferred("add_child", new_message)
-		print("not adding instance", new_message.content)
-#		messages_container.call_deferred("move_child", new_message, messages_container.get_child_count()-1)
+		
+		messages_container.add_child(new_message)
+		new_message.message = message
+#		new_message.get_parent().move_child(new_message, 0)
 
 
 func set_typing(bot, dict: Dictionary):
