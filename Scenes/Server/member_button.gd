@@ -1,7 +1,7 @@
 extends Button
 
 
-onready var member = {} setget set_member
+onready var member setget set_member
 onready var popup = $PopupMenu
 
 
@@ -16,7 +16,10 @@ func _ready() -> void:
 
 
 func set_member(value: Dictionary) -> void:
-	member = value.duplicate()
+	if !value:
+		return
+	
+	member = value
 	name = member.user.id
 	hint_tooltip = Helpers.print_dict(member)
 	
@@ -24,7 +27,6 @@ func set_member(value: Dictionary) -> void:
 		text = member.nick
 	else:
 		text = member.user.username
-	print(member, "cool")
 
 
 func _on_PopupMenu_about_to_show() -> void:
@@ -42,5 +44,4 @@ func _on_PopupMenu_id_pressed(id):
 	match id:
 		0:
 			# copy
-			print(member, "testing") # this is empty dict for no reason?
 			OS.set_clipboard(member.user.id)

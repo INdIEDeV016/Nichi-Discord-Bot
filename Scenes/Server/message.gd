@@ -1,5 +1,6 @@
 extends Control
 
+signal reply_pressed
 
 var bot: DiscordBot
 var message: Message setget set_message
@@ -14,7 +15,7 @@ onready var name_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer
 onready var time_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Time
 onready var avatar_node = $VBoxContainer/HBoxContainer/Avatar
 onready var content_node = $VBoxContainer/HBoxContainer/VBoxContainer/Content
-onready var edited_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Editted
+onready var edited_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Edited
 onready var text_edit = $VBoxContainer/HBoxContainer/VBoxContainer/TextEdit
 onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 onready var reply_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Reply
@@ -52,7 +53,9 @@ func set_message(value: Message) -> void:
 	
 	name_node.text = message.author.username
 	
-	time_node.text = "Today at %s" % message.edited_timestamp
+	if message.edited_timestamp:
+		var parsed_date_time = Helpers.get_local_time(message.edited_timestamp)
+		time_node.text = "%s %s" % [Helpers.get_date(parsed_date_time), Helpers.get_time(parsed_date_time)]
 	
 	var dict: Dictionary
 	for key in message.get_property_list():
@@ -85,7 +88,7 @@ func _on_Delete_pressed() -> void:
 
 
 func _on_Reply_pressed() -> void:
-	pass # Replace with function body.
+	emit_signal("reply_pressed")
 
 
 func _on_Edit_toggled(button_pressed: bool) -> void:
@@ -93,10 +96,13 @@ func _on_Edit_toggled(button_pressed: bool) -> void:
 
 func _on_TextEdit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.scancode == KEY_ENTER and not event.shift:
+		if event.scancode == KEY_ENTER and not event.shift and not event.echo:
 			edit_mode(false)
-			Channel.edit_message(server.bot, name, server.current_channel, {"content":text_edit.text})
-			time_node.text = "Today at %s" % Helpers.get_time()
+			yield(Channel.edit_message(server.bot, name, server.current_channel, {"content": text_edit.text}), "completed")
+			if message.edited_timestamp:
+				var parsed_date_time = Helpers.get_local_time(message.edited_timestamp)
+				print(parsed_date_time)
+				time_node.text = "%s %s" % [Helpers.get_date(parsed_date_time), Helpers.get_time(parsed_date_time)]
 
 
 func _on_PanelContainer_mouse_exited() -> void:

@@ -8,13 +8,14 @@ export var message_scene = preload("res://Scenes/Server/message.tscn")
 var guild: Guild
 var bot: DiscordBot
 var current_channel: String setget set_channel
+var referenced_message: Dictionary
 
 onready var channels_container = $HSplitContainer/ChannelContainer/Channels
 onready var members_container = $HSplitContainer/HSplitContainer/MembersContainer/Members
 onready var messages_container = $HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer/Messages
 onready var typing_label = $HSplitContainer/HSplitContainer/MessagesContainer/Typing
 onready var timer = $Timer
-
+onready var discord_edit = $HSplitContainer/HSplitContainer/MessagesContainer/DiscordEdit
 
 func _ready() -> void:
 	name = guild.name
@@ -45,16 +46,34 @@ func set_channel(value: String) -> void:
 		child.queue_free()
 	
 	var channel = yield(guild.get_channel(bot, current_channel), "completed")
-	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
+	var messages: Array = yield(channel.get_messages(bot, channel.id), "completed")
 	
 	for message in messages:
 		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
+	
+	discord_edit.placeholder_text = "Message #%s" % channel.name
+	discord_edit.update()
 
+func reply_pressed(message: Message):
+	$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.text = "Replying to %s" % message.author.username
+	$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.show()
+	print(message.guild_id, "test", message.channel_id, message.id)
+	if message.guild_id:
+		referenced_message = {"message_id": message.id, "channel_id": message.channel_id, "guild_id": message.guild_id}
+	else:
+		referenced_message = {"message_id": message.id, "channel_id": message.channel_id}
+	
 
 func _on_DiscordEdit_text_entered(text: String):
 	if text != "":
-		Channel.create_message(bot, {"content": text}, current_channel)
+		if referenced_message:
+			Channel.create_message(bot, {"content": text, "message_reference": referenced_message, "type": 19}, current_channel)
+		else:
+			Channel.create_message(bot, {"content": text}, current_channel)
+		if $HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.visible:
+			$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.hide()
+			referenced_message = {}
 
 func message_recieved(message: Message, channel: Channel):
 	typing_label.hide()
@@ -71,14 +90,18 @@ func message_recieved(message: Message, channel: Channel):
 		new_message.content = message.content
 		new_message.name = message.id
 		new_message.author_name = message.author.username
-		var time_zone = OS.get_time_zone_info()
-		var date_time = Helpers.to_datetime(message.timestamp)
-		var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
-		var timestamp = OS.get_datetime_from_unix_time(current_time)
+		var timestamp
+		if message.edited_timestamp:
+			timestamp = Helpers.get_local_time(message.edited_timestamp)
+		else:
+			timestamp = Helpers.get_local_time(message.timestamp)
 		new_message.time = "%s %s" % [Helpers.get_date(timestamp), Helpers.get_time(timestamp)]
-		
+			
 		messages_container.add_child(new_message)
+		new_message.connect("reply_pressed", self, "reply_pressed", [message])
 		new_message.message = message
+		if message.edited_timestamp:
+			new_message.edited_node.show()
 #		new_message.get_parent().move_child(new_message, 0)
 
 

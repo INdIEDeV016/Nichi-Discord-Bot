@@ -64,7 +64,11 @@ func adjust_text_nodes():
 		rect_position.y += line_height
 		rect_min_size.y -= line_height
 
-
+func update():
+	main_text.center_viewport_to_cursor()
+	adjust_text_nodes()
+	placeholder.text = placeholder_text
+	main_text.text = text
 
 func _on_TextEdit_text_changed() -> void:
 	adjust_text_nodes()

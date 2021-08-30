@@ -23,10 +23,10 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 1014.0
-margin_bottom = 58.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1913.0
+margin_bottom = 59.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -47,7 +47,7 @@ margin_bottom = 14.0
 text = "Some refrenced message"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1004.0
+margin_right = 1906.0
 margin_bottom = 48.0
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
@@ -63,13 +63,13 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 52.0
-margin_right = 850.0
+margin_right = 1610.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.35
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 798.0
+margin_right = 1558.0
 margin_bottom = 14.0
 custom_constants/separation = 14
 
@@ -85,7 +85,7 @@ margin_bottom = 14.0
 custom_colors/font_color = Color( 0.447059, 0.447059, 0.447059, 1 )
 text = "Today at 16:00PM"
 
-[node name="Editted" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Edited" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_left = 206.0
 margin_right = 260.0
@@ -94,7 +94,7 @@ text = "(editted)"
 
 [node name="Content" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 18.0
-margin_right = 798.0
+margin_right = 1558.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -112,8 +112,8 @@ size_flags_vertical = 3
 caret_blink = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 858.0
-margin_right = 1004.0
+margin_left = 1760.0
+margin_right = 1906.0
 margin_bottom = 20.0
 size_flags_horizontal = 10
 size_flags_vertical = 0

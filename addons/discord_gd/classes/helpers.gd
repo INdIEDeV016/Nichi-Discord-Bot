@@ -38,16 +38,24 @@ static func get_date(datetime: Dictionary = OS.get_datetime()):
 	return "%02d/%02d/%02d" % [datetime.day, datetime.month, datetime.year]
 
 static func to_datetime(iso: String):
+	if iso.empty():
+		return
 	var date = iso.split("T")[0]
 	var time = iso.split("T")[1]
 	return {
-		"year": date.split("-")[0], 
-		"month": date.split("-")[1], 
-		"day": date.split("-")[2],
-		"hour": time.split(":")[0],
-		"minute": time.split(":")[1],
-		"second": time.split(":")[2].split(".")[0],
+		"year": date.split("-")[0].to_int(), 
+		"month": date.split("-")[1].to_int(), 
+		"day": date.split("-")[2].to_int(),
+		"hour": time.split(":")[0].to_int(),
+		"minute": time.split(":")[1].to_int(),
+		"second": time.split(":")[2].split(".")[0].to_int(),
 		}
+
+static func get_local_time(timestamp: String):
+	var time_zone = OS.get_time_zone_info()
+	var date_time = to_datetime(timestamp)
+	var current_time = OS.get_unix_time_from_datetime(date_time) + time_zone.bias * 60
+	return OS.get_datetime_from_unix_time(current_time)
 
 # Pretty prints a Dictionary
 static func print_dict(d: Dictionary) -> String:

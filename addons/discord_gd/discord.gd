@@ -122,7 +122,7 @@ func login(token: String, app_id: String = '') -> void:
 	assert(TOKEN.length() > 2, 'ERROR: Unable to login. TOKEN attribute not set.')
 	_headers = ['Authorization: Bot %s' % TOKEN, 'User-Agent: discord.gd (https://github.com/3ddelano/discord.gd)']
 	_login_error = _client.connect_to_url(_gateway_base)
-
+	print(_login_error)
 	# No internet?
 	if _login_error == ERR_INVALID_PARAMETER:
 		print('Trying to reconnect in 5s')
