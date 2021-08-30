@@ -74,11 +74,11 @@ static func get_message(bot, message_id: String, channel_id: String) -> Dictiona
 
 static func get_messages(bot, channel_id: String, before: String, limit: int = 100) -> Array:
 	var message_array: Array = yield(bot._send_get("/channels/%s/messages" % channel_id + "?before=%s&limit=%s" % [before, limit]), "completed")
-#	var invert = message_array.invert() # PLEASE REPORT: Array.invert() is not working, it returns `Nil`
 	
 	var message_object_array: Array
 	for message in message_array:
 		var message_object = Message.new(bot, message)
 		message_object_array.append(message_object)
 	
+	message_object_array.invert()
 	return message_object_array

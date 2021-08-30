@@ -3,6 +3,7 @@ extends Control
 
 var bot: DiscordBot
 var message: Message setget set_message
+
 var avatar: ImageTexture
 var author_name: String
 var content: String
@@ -16,6 +17,7 @@ onready var content_node = $VBoxContainer/HBoxContainer/VBoxContainer/Content
 onready var editted_node = $VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/Editted
 onready var text_edit = $VBoxContainer/HBoxContainer/VBoxContainer/TextEdit
 onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
+onready var reply_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Reply
 
 
 func _ready():
@@ -28,7 +30,7 @@ func _ready():
 	content_node.text = content
 	
 	yield(get_tree(), "idle_frame")
-	get_parent().move_child(self, 0)
+	get_parent().move_child(self, get_parent().get_child_count() - 1)
 	grab_focus()
 	
 	yield(GlobalTween.make_tween(
@@ -48,14 +50,15 @@ func set_message(value: Message) -> void:
 	
 	content_node.text = String(message.content)
 	
-	if message.has("avatar"):
-		avatar_node.texture = yield(bot._send_get_cdn(message.author.avatar), "completed")
-	
 	name_node.text = message.author.username
 	
 	time_node.text = "Today at %s" % message.edited_timestamp
 	
-#	avatar_node.texture = avatar
+	var dict: Dictionary
+	for key in message.get_property_list():
+		dict[key] = message.get(str(key))
+	
+	hint_tooltip = Helpers.print_dict(dict)
 
 
 func edit_mode(_bool: bool):

@@ -28,83 +28,23 @@ func make_tween(
 	yield(self, "tween_all_completed")
 
 
-func window_tween(window: Control, visible: bool) -> void:
-	var transition: int = Tween.TRANS_BACK
-	var easing: int = Tween.EASE_OUT
+func fold_panel(control: Control, visible: bool, folded_size: float) -> void:
 	if visible:
-		start_pos = window.get_global_mouse_position()
-		window.show()
 # warning-ignore:return_value_discarded
 		interpolate_property(
-			window, "rect_scale",
-			Vector2.ZERO, Vector2.ONE,
-			window_trans_duration,
-			transition, easing
+			control, "rect_min_size:y",
+			folded_size, control.rect_size.y,
+			0.5,
+			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
-# warning-ignore:return_value_discarded
-		interpolate_property(
-			window, "rect_position",
-			window.get_global_mouse_position(), window.rect_position,
-			window_trans_duration,
-			transition, easing
-		)
-# warning-ignore:return_value_discarded
-		start()
-## warning-ignore:return_value_discarded
-#		interpolate_property(
-#			window, "rect_size:x",
-#			0, size.x,
-#			window_trans_duration,
-#			transition, easing
-#		)
-## warning-ignore:return_value_discarded
-#		interpolate_property(
-#			window, "rect_size:y",
-#			window_title_height, size.y,
-#			window_trans_duration,
-#			transition, easing,
-#			window_trans_duration
-#		)
-## warning-ignore:return_value_discarded
-#		start()
-#		yield(self, "tween_all_completed")
 	else:
-		window.show()
-# warning-ignore:return_value_discarded
 		interpolate_property(
-			window, "rect_scale",
-			Vector2.ONE, Vector2.ZERO,
-			window_trans_duration,
-			Tween.TRANS_QUART, easing
+			control, "rect_min_size:y",
+			control.rect_size.y, folded_size,
+			0.5,
+			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
-# warning-ignore:return_value_discarded
-		interpolate_property(
-			window, "rect_position",
-			window.rect_position, start_pos,
-			window_trans_duration,
-			transition, easing
-		)
-# warning-ignore:return_value_discarded
-		start()
-## warning-ignore:return_value_discarded
-#		interpolate_property(
-#			window, "rect_size:y",
-#			size.y, window_title_height,
-#			window_trans_duration,
-#			transition, easing
-#		)
-## warning-ignore:return_value_discarded
-#		interpolate_property(
-#			window, "rect_size:x",
-#			size.x, 0,
-#			window_trans_duration,
-#			transition, easing,
-#			window_trans_duration
-#		)
-## warning-ignore:return_value_discarded
-		yield(self, "tween_all_completed")
-		window.hide()
-# warning-ignore:return_value_discarded
+	start()
 	yield(self, "tween_all_completed")
 
 
@@ -112,6 +52,7 @@ func transition_tween(control: Control, visible: bool, color: Color = Color(0.13
 	if visible:
 #		control.raise()
 		control.show()
+# warning-ignore:return_value_discarded
 		interpolate_property(
 			control, "modulate",
 			Color.transparent, color,

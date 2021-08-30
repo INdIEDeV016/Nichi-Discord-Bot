@@ -39,10 +39,10 @@ func _ready() -> void:
 
 
 func set_channel(value: String) -> void:
+	current_channel = value
 	for child in messages_container.get_children():
 		child.queue_free()
 	
-	current_channel = value
 	var channel = yield(guild.get_channel(bot, current_channel), "completed")
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
@@ -76,6 +76,7 @@ func message_recieved(message: Message, channel: Channel):
 		
 		new_message.time = "Today at %s" % Helpers.get_time()
 		messages_container.add_child(new_message)
+		new_message.message = message
 #		new_message.get_parent().move_child(new_message, 0)
 
 
