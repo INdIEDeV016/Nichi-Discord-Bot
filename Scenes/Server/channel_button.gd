@@ -17,7 +17,12 @@ func set_channel(value: Dictionary):
 	
 	if channel.type == Channel.Channel_Types.GUILD_CATEGORY:
 		flat = true
-		icon = null
+		icon = preload("res://Assets/GuiTreeArrowRight.svg")
+	elif channel.type == Channel.Channel_Types.GUILD_VOICE:
+		disabled = true
+		icon = preload("res://Assets/Voice Channel.svg")
+	elif channel.type == Channel.Channel_Types.GUILD_STAGE_VOICE:
+		icon = preload("res://Assets/Stage Channel.svg")
 	
 	text = channel.name
 	var dict = channel

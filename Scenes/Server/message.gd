@@ -5,7 +5,7 @@ var bot: DiscordBot
 var message: Message setget set_message
 
 var avatar: ImageTexture
-var author_name: String
+var author: User
 var content: String
 var time: String
 
@@ -19,13 +19,17 @@ onready var text_edit = $VBoxContainer/HBoxContainer/VBoxContainer/TextEdit
 onready var edit_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Edit
 onready var reply_button = $VBoxContainer/HBoxContainer/HBoxContainer2/Reply
 
+onready var designer_path = $VBoxContainer/HBoxContainer2/Control/Path2D
+
 
 func _ready():
+	designer_path.get_child(0).points = designer_path.curve.get_baked_points()
+	
 	self_modulate = Color(0.211765, 0.223529, 0.247059)
 	edit_mode(edit_button.pressed)
 	editted_node.hide()
 	avatar_node.texture = avatar
-	name_node.text = author_name
+	name_node.text = author.username
 	time_node.text = time
 	content_node.text = content
 	
@@ -52,7 +56,14 @@ func set_message(value: Message) -> void:
 	
 	name_node.text = message.author.username
 	
-	time_node.text = "Today at %s" % message.edited_timestamp
+	if message.edited_timestamp:
+		time_node.text = "Today at %s" % message.edited_timestamp
+		editted_node.show()
+	else:
+		time_node.text = "Today at %s" % message.timestamp
+	
+	if author.id != bot.user.id:
+		edit_button.hide()
 	
 	var dict = message
 	hint_tooltip = message.print()

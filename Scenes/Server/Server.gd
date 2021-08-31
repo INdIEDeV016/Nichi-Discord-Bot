@@ -69,10 +69,10 @@ func message_recieved(message: Message, channel: Channel):
 #		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
 		new_message.bot = bot
 		var avatar = yield(message.author.get_display_avatar({size = 128}), "completed")
+		new_message.author = message.author
 		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		new_message.content = message.content
 		new_message.name = message.id
-		new_message.author_name = message.author.username
 #		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
 #		var time_zone = OS.get_time_zone_info()
 #		print(time_zone)

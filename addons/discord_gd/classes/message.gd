@@ -173,7 +173,7 @@ func _to_string(pretty: bool = false):
 	return JSON.print(data, '\t', true) if pretty else JSON.print(data, '', true)
 
 func print():
-	print(_to_string(true))
+#	print(_to_string(true))
 	return _to_string(true)
 
 func has(attribute):

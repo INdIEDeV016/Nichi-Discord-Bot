@@ -62,7 +62,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Command" parent="HSplitContainer/ScrollContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 390.0
+margin_bottom = 464.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer"]
 margin_left = 402.0

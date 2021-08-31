@@ -18,6 +18,8 @@ corner_radius_bottom_left = 5
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -45,10 +47,9 @@ __meta__ = {
 [node name="Panel" type="PanelContainer" parent="VBoxContainer"]
 margin_top = 24.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 296.0
 rect_clip_content = true
 size_flags_horizontal = 3
-size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -91,5 +92,5 @@ margin_top = 60.0
 margin_right = 1024.0
 margin_bottom = 272.0
 
-[connection signal="toggled" from="VBoxContainer/Title" to="VBoxContainer/Panel" method="_on_Title_toggled"]
-[connection signal="text_changed" from="VBoxContainer/Panel/VBoxContainer/Name" to="VBoxContainer/Panel" method="_on_Name_text_changed"]
+[connection signal="toggled" from="VBoxContainer/Title" to="." method="_on_Title_toggled"]
+[connection signal="text_changed" from="VBoxContainer/Panel/VBoxContainer/Name" to="." method="_on_Name_text_changed"]
