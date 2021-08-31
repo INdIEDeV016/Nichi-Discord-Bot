@@ -59,20 +59,6 @@ var _logged_in = false
 # Count of the number of guilds initially loaded
 var guilds_loaded = 0
 
-var CHANNEL_TYPES = {
-	'0': 'GUILD_TEXT',
-	'1': 'DM',
-	'2': 'GUILD_VOICE',
-	'3': 'GROUP_DM',
-	'4': 'GUILD_CATEGORY',
-	'5': 'GUILD_NEWS',
-	'6': 'GUILD_STORE',
-	'10': 'GUILD_NEWS_THREAD',
-	'11': 'GUILD_PUBLIC_THREAD',
-	'12': 'GUILD_PRIVATE_THREAD',
-	'13': 'GUILD_STAGE_VOICE'
-}
-
 var GUILD_ICON_SIZES = [16,32,64,128,256,512,1024,2048]
 
 var ACTIVITY_TYPES = {
@@ -520,7 +506,6 @@ func _handle_events(dict: Dictionary) -> void:
 					emit_signal('bot_ready', self)
 			
 			for channel in guild.channels:
-				_clean_channel(channel)
 				channel.guild_id = guild.id
 				channels[channel.id] = channel
 		
@@ -1000,9 +985,6 @@ func _clean_guilds(guilds: Array) -> void:
 			guild.available = true
 		guild.erase('unavailable')
 
-func _clean_channel(channel: Dictionary) -> void:
-	if channel.has('type') and str(channel.type) in CHANNEL_TYPES.keys():
-		channel.type = CHANNEL_TYPES.get(str(channel.type))
 
 func _parse_message(message: Dictionary):
 	assert(typeof(message) == TYPE_DICTIONARY, 'Invalid Type: message must be a Dictionary')
@@ -1017,7 +999,6 @@ func _parse_message(message: Dictionary):
 				print('Fetching DM channel: %s from api' % message.channel_id)
 
 			channel = yield(_get_dm_channel(message.channel_id), 'completed')
-			_clean_channel(channel)
 
 			if channel and channel.has('type') and channel.type == 'DM':
 				channels[str(message.channel_id)] = channel

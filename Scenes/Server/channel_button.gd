@@ -51,4 +51,5 @@ func _on_PopupMenu_id_pressed(id: int) -> void:
 
 
 func _on_Channel_pressed() -> void:
-	get_parent().owner.current_channel = channel.id
+	if channel.type == Channel.Channel_Types.GUILD_TEXT:
+		get_parent().owner.current_channel = channel.id

@@ -115,12 +115,12 @@ margin_bottom = 14.0
 custom_colors/font_color = Color( 0.447059, 0.447059, 0.447059, 1 )
 text = "Today at 16:00PM"
 
-[node name="Editted" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Edited" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 visible = false
 margin_left = 206.0
 margin_right = 260.0
 margin_bottom = 14.0
-text = "(editted)"
+text = "(edited)"
 
 [node name="Content" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 18.0
