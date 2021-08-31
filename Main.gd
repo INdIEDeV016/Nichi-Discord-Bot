@@ -3,6 +3,8 @@ extends Control
 
 export(PackedScene) var server_scene = preload("res://Scenes/Server/Server.tscn")
 
+var config_path = "user://config.cfg"
+
 var current_guild_id: = ""
 var current_channel_id: = ""
 
@@ -15,8 +17,18 @@ var servers: Dictionary = {}
 
 func _ready() -> void:
 	bot_node.VERBOSE = true
-	tab_container.current_tab = 1
+	var file = File.new()
+	if !file.file_exists(config_path):
+		tab_container.current_tab = 1
+	else:
+		setup_bot(config_path)
+		tab_container.current_tab = 2
 
+func setup_bot(file_path):
+	var f = ConfigFile.new()
+	f.load(file_path)
+	bot_node.INTENTS = f.get_value("Main", "Intents", 32383)
+	bot_node.login(f.get_value("Main", "BotToken", ""), f.get_value("Main", "ApplicationID", ""))
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 	print("Logged in as |%s#%s|" % [bot.user.username, bot.user.discriminator])
@@ -25,6 +37,16 @@ func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 	for guild in bot.guilds:
 		servers.append(bot.guilds[guild].name)
 	print("Ready on %s servers (guilds): %s and %s channels" % [bot.guilds.size(), servers,  bot.channels.size()])
+	var f = ConfigFile.new()
+	f.load(config_path)
+	bot_node.set_presence({
+		"status": f.get_value("Main", "Status", "idle"),
+		"afk": f.get_value("Main", "AFK", false),
+		"activity": {
+			"type": f.get_value("Main", "Type", "listening"),
+			"name": f.get_value("Main", "Name", "you. Please be sane!"),
+		}
+	})
 	
 #	bot_node.add_application_commands(
 #		{
@@ -67,8 +89,10 @@ func _on_DiscordBot_interaction_create(bot, interaction: DiscordInteraction) -> 
 	pass # Replace with function body.
 
 
-func _on_DiscordBot_message_create(bot, message, channel: Channel, guild: Guild):
-	servers[guild.id].message_recieved(message, channel)
+func _on_DiscordBot_message_create(_bot, message, channel: Channel, guild: Guild):
+	print("message received")
+	yield(servers[guild.id].message_recieved(message, channel), "completed")
+	print("recived")
 
 
 func _notification(what: int) -> void:

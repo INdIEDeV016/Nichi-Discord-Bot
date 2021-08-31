@@ -33,13 +33,14 @@ __meta__ = {
 }
 
 [node name="ChannelContainer" type="ScrollContainer" parent="HSplitContainer"]
-margin_bottom = 589.0
+margin_right = 418.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Channels" type="VBoxContainer" parent="HSplitContainer/ChannelContainer"]
-margin_right = 58.0
-margin_bottom = 577.0
+margin_right = 418.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -47,7 +48,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HSplitContainer/ChannelContainer/Channels"]
-margin_right = 58.0
+margin_right = 418.0
 margin_bottom = 14.0
 text = "Channels"
 align = 1
@@ -55,20 +56,20 @@ valign = 1
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/ChannelContainer/Channels"]
 margin_top = 18.0
-margin_right = 58.0
+margin_right = 418.0
 margin_bottom = 22.0
 
 [node name="HSplitContainer" type="HSplitContainer" parent="HSplitContainer"]
-margin_left = 12.0
-margin_right = 1008.0
-margin_bottom = 589.0
+margin_left = 430.0
+margin_right = 1904.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 split_offset = 109
 
 [node name="MessagesContainer" type="VBoxContainer" parent="HSplitContainer/HSplitContainer"]
-margin_right = 790.0
-margin_bottom = 589.0
+margin_right = 1120.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.23
@@ -77,8 +78,8 @@ __meta__ = {
 }
 
 [node name="MessageContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
-margin_right = 790.0
-margin_bottom = 551.0
+margin_right = 1120.0
+margin_bottom = 1013.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 follow_focus = true
@@ -87,8 +88,8 @@ __meta__ = {
 }
 
 [node name="Messages" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer"]
-margin_right = 790.0
-margin_bottom = 551.0
+margin_right = 1120.0
+margin_bottom = 1013.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.1
@@ -97,13 +98,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ReplyMessage" type="Label" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
+margin_top = 1017.0
+margin_right = 1120.0
+margin_bottom = 1031.0
+
 [node name="DiscordEdit" parent="HSplitContainer/HSplitContainer/MessagesContainer" instance=ExtResource( 2 )]
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 555.0
-margin_right = 790.0
-margin_bottom = 589.0
+margin_top = 1035.0
+margin_right = 1120.0
+margin_bottom = 1069.0
 size_flags_vertical = 8
 
 [node name="Typing" type="Label" parent="HSplitContainer/HSplitContainer/MessagesContainer"]
@@ -114,15 +120,15 @@ margin_bottom = 589.0
 text = "@%s is typing..."
 
 [node name="MembersContainer" type="ScrollContainer" parent="HSplitContainer/HSplitContainer"]
-margin_left = 802.0
-margin_right = 996.0
-margin_bottom = 589.0
+margin_left = 1132.0
+margin_right = 1474.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Members" type="VBoxContainer" parent="HSplitContainer/HSplitContainer/MembersContainer"]
-margin_right = 194.0
-margin_bottom = 589.0
+margin_right = 342.0
+margin_bottom = 1069.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -130,7 +136,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HSplitContainer/HSplitContainer/MembersContainer/Members"]
-margin_right = 194.0
+margin_right = 342.0
 margin_bottom = 14.0
 text = "Members"
 align = 1
@@ -138,7 +144,7 @@ valign = 1
 
 [node name="HSeparator" type="HSeparator" parent="HSplitContainer/HSplitContainer/MembersContainer/Members"]
 margin_top = 18.0
-margin_right = 194.0
+margin_right = 342.0
 margin_bottom = 22.0
 
 [node name="Timer" type="Timer" parent="."]

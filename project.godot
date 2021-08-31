@@ -127,6 +127,8 @@ GlobalTween="*res://tween.gd"
 
 [display]
 
+window/size/width=1920
+window/size/height=1080
 window/size/test_width=1600
 window/size/test_height=900
 
@@ -141,3 +143,7 @@ singletons=[ "res://git_api.gdnlib" ]
 [physics]
 
 common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

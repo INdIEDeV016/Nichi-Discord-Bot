@@ -5,6 +5,7 @@ class_name DiscordEdit, "res://Assets/TextEdit.svg"
 signal button_pressed(button)
 signal text_entered(text)
 signal size_changed(value)
+signal text_changed(text)
 
 export(int) var max_visible_lines: int = 5
 export(String, MULTILINE) var text: String
@@ -63,7 +64,11 @@ func adjust_text_nodes():
 		rect_position.y += line_height
 		rect_min_size.y -= line_height
 
-
+func update():
+	main_text.center_viewport_to_cursor()
+	adjust_text_nodes()
+	placeholder.text = placeholder_text
+	main_text.text = text
 
 func _on_TextEdit_text_changed() -> void:
 	adjust_text_nodes()
@@ -82,3 +87,6 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 		if event.scancode == KEY_ENTER and event.shift == false and not event.echo:
 			emit_signal("text_entered", text)
 			main_text.text = ""
+		if event.scancode != KEY_ENTER and event.shift == false and not event.echo:
+			emit_signal("text_changed", text)
+			

@@ -1,7 +1,7 @@
 extends Button
 
 
-onready var member: Dictionary = {} setget set_member
+onready var member setget set_member
 onready var popup = $PopupMenu
 
 
@@ -16,6 +16,9 @@ func _ready() -> void:
 
 
 func set_member(value: Dictionary) -> void:
+	if !value:
+		return
+	
 	member = value
 	name = member.user.id
 	
@@ -37,3 +40,10 @@ func _on_Member_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT:
 			popup.popup()
+
+
+func _on_PopupMenu_id_pressed(id):
+	match id:
+		0:
+			# copy
+			OS.set_clipboard(member.user.id)

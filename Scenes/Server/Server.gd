@@ -8,13 +8,14 @@ export var message_scene = preload("res://Scenes/Server/message.tscn")
 var guild: Guild
 var bot: DiscordBot
 var current_channel: String setget set_channel
+var referenced_message: Dictionary
 
 onready var channels_container = $HSplitContainer/ChannelContainer/Channels
 onready var members_container = $HSplitContainer/HSplitContainer/MembersContainer/Members
 onready var messages_container = $HSplitContainer/HSplitContainer/MessagesContainer/MessageContainer/Messages
 onready var typing_label = $HSplitContainer/HSplitContainer/MessagesContainer/Typing
 onready var timer = $Timer
-
+onready var discord_edit = $HSplitContainer/HSplitContainer/MessagesContainer/DiscordEdit
 
 func _ready() -> void:
 	name = guild.name
@@ -50,13 +51,33 @@ func set_channel(value: String) -> void:
 		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
 	
+
+	discord_edit.placeholder_text = "Message #%s" % channel.name
+	discord_edit.update()
+
 #	var last_message: Message = yield(channel.get_message(bot, channel.last_message_id, channel.id), "completed")
 #	message_recieved(last_message, channel)
 
 
+func reply_pressed(message: Message):
+	$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.text = "Replying to %s" % message.author.username
+	$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.show()
+	print(message.guild_id, "test", message.channel_id, message.id)
+	if message.guild_id:
+		referenced_message = {"message_id": message.id, "channel_id": message.channel_id, "guild_id": message.guild_id}
+	else:
+		referenced_message = {"message_id": message.id, "channel_id": message.channel_id}
+	
+
 func _on_DiscordEdit_text_entered(text: String):
 	if text != "":
-		Channel.create_message(bot, {"content": text}, current_channel)
+		if referenced_message:
+			Channel.create_message(bot, {"content": text, "message_reference": referenced_message, "type": 19}, current_channel)
+		else:
+			Channel.create_message(bot, {"content": text}, current_channel)
+		if $HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.visible:
+			$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.hide()
+			referenced_message = {}
 
 func message_recieved(message: Message, channel: Channel):
 	typing_label.hide()
@@ -68,23 +89,32 @@ func message_recieved(message: Message, channel: Channel):
 		var new_message = message_scene.instance()
 #		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
 		new_message.bot = bot
-		var avatar = yield(message.author.get_display_avatar({size = 128}), "completed")
-		new_message.author = message.author
+		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed") # this is what Godot Docs say to use.
 		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		new_message.content = message.content
 		new_message.name = message.id
-#		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
-#		var time_zone = OS.get_time_zone_info()
-#		print(time_zone)
+		new_message.author_name = message.author.username
+		var timestamp
+		if message.edited_timestamp:
+			timestamp = Helpers.get_local_time(message.edited_timestamp)
+		else:
+			timestamp = Helpers.get_local_time(message.timestamp)
+		new_message.time = "%s %s" % [Helpers.get_date(timestamp), Helpers.get_time(timestamp)]
 		
-		new_message.time = "Today at %s" % Helpers.get_time()
+		new_message.author = message.author
+		new_message.content = message.content
+		new_message.name = message.id
+    
 		messages_container.add_child(new_message)
+		new_message.connect("reply_pressed", self, "reply_pressed", [message])
 		new_message.message = message
+		if message.edited_timestamp:
+			new_message.edited_node.show()
 #		new_message.get_parent().move_child(new_message, 0)
 
 
 func set_typing(bot, dict: Dictionary):
-	if current_channel == dict.channel_id:
+	if current_channel == dict.channel_id and dict.member.user.id != bot.user.id:
 		timer.start()
 		if dict.member.has("nick") and dict.member.nick:
 			typing_label.text = "%s is typing..." % dict.member.nick
@@ -95,3 +125,7 @@ func set_typing(bot, dict: Dictionary):
 
 func _on_Timer_timeout() -> void:
 	typing_label.hide()
+
+
+func _on_DiscordEdit_text_changed(text):
+	Channel.send_typing(bot, current_channel)
