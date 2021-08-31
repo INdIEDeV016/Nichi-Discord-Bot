@@ -58,7 +58,7 @@ static func get_local_time(timestamp: String):
 	return OS.get_datetime_from_unix_time(current_time)
 
 # Pretty prints a Dictionary
-static func print_dict(d: Dictionary) -> String:
+static func print_dict(d) -> String:
 #	print(JSON.print(d, '\t'))
 	return JSON.print(d, '\t', true)
 

@@ -21,12 +21,14 @@ func set_member(value: Dictionary) -> void:
 	
 	member = value
 	name = member.user.id
-	hint_tooltip = Helpers.print_dict(member)
 	
 	if member.has("nick") and member.nick:
 		text = member.nick
 	else:
 		text = member.user.username
+	
+	var dict = member
+	hint_tooltip = Helpers.print_dict(dict)
 
 
 func _on_PopupMenu_about_to_show() -> void:

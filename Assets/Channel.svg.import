@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Add.svg-35b55f4fcb55e46a5bb60616bbb700d5.stex"
+path="res://.import/Channel.svg-4403b8fbc795a0410d1a82d91ae93fa0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Add.svg"
-dest_files=[ "res://.import/Add.svg-35b55f4fcb55e46a5bb60616bbb700d5.stex" ]
+source_file="res://Assets/Channel.svg"
+dest_files=[ "res://.import/Channel.svg-4403b8fbc795a0410d1a82d91ae93fa0.stex" ]
 
 [params]
 
@@ -21,11 +21,11 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=true
+flags/mipmaps=false
+flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
-process/premult_alpha=true
+process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 process/normal_map_invert_y=false

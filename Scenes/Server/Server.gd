@@ -29,10 +29,9 @@ func _ready() -> void:
 	for member in members:
 		yield(get_tree(), "idle_frame")
 		var member_button = member_button_scene.instance()
-#		print(member)
-		member_button.member = member.duplicate()
 		var avatar = yield(member.user.get_display_avatar({size = 128}), "completed")
 		member_button.icon = Helpers.to_image_texture(Helpers.to_png_image(avatar))
+		member_button.member = member
 #		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
 	
@@ -45,15 +44,20 @@ func set_channel(value: String) -> void:
 	for child in messages_container.get_children():
 		child.queue_free()
 	
-	var channel = yield(guild.get_channel(bot, current_channel), "completed")
-	var messages: Array = yield(channel.get_messages(bot, channel.id), "completed")
+	var channel: Channel = yield(guild.get_channel(bot, current_channel), "completed")
+	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
 	
 	for message in messages:
 		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
 	
+
 	discord_edit.placeholder_text = "Message #%s" % channel.name
 	discord_edit.update()
+
+#	var last_message: Message = yield(channel.get_message(bot, channel.last_message_id, channel.id), "completed")
+#	message_recieved(last_message, channel)
+
 
 func reply_pressed(message: Message):
 	$HSplitContainer/HSplitContainer/MessagesContainer/ReplyMessage.text = "Replying to %s" % message.author.username
@@ -96,7 +100,11 @@ func message_recieved(message: Message, channel: Channel):
 		else:
 			timestamp = Helpers.get_local_time(message.timestamp)
 		new_message.time = "%s %s" % [Helpers.get_date(timestamp), Helpers.get_time(timestamp)]
-			
+		
+		new_message.author = message.author
+		new_message.content = message.content
+		new_message.name = message.id
+    
 		messages_container.add_child(new_message)
 		new_message.connect("reply_pressed", self, "reply_pressed", [message])
 		new_message.message = message

@@ -65,6 +65,10 @@ size_flags_vertical = 3
 anchor_right = 0.0
 anchor_bottom = 0.0
 
+margin_right = 390.0
+margin_bottom = 464.0
+
+
 [node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer"]
 margin_left = 402.0
 margin_right = 793.0
