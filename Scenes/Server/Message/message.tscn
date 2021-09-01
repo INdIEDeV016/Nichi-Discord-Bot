@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/Quicksand/static/Quicksand-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/Quicksand/static/Quicksand-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/Server/Message/message.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -19,6 +20,11 @@ corner_radius_bottom_left = 5
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 22.5, 15, 1.75, 4.75, -1.75, -4.75, 20, 7.75, -4.25, 8.5, 4.25, -8.5, 4.75, -2.5, 0, 0, 0, 0, 51.5, 6.75 )
 }
+
+[sub_resource type="DynamicFont" id=7]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 18
@@ -131,6 +137,7 @@ margin_right = 798.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/bold_font = SubResource( 7 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/focus = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )

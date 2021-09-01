@@ -65,7 +65,11 @@ func set_message(value: Message) -> void:
 	
 	if author.id != bot.user.id:
 		edit_button.hide()
-		
+	
+	if not message.mentions.empty():
+		for mention in message.mentions:
+			content_node.bbcode_text = content_node.bbcode_text.replace("<@!%s>" % mention.id, "[b]@%s[/b]" % mention.username)
+	
 	if message.attachments:
 		for attachment in message.attachments:
 			if attachment.content_type == "image/png":
