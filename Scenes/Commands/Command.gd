@@ -1,36 +1,41 @@
-extends Control
+extends VBoxContainer
 
 
 
-onready var title = $VBoxContainer/Title
-onready var panel = $VBoxContainer/Panel
+onready var title = $Title
+onready var panel = $Panel
+
 
 func _ready() -> void:
-	pass
+	panel.self_modulate = Color(0.211765, 0.223529, 0.247059)
 
 
-var once: bool
+func _process(delta: float) -> void:
+	if is_zero_approx(panel.rect_scale.y):
+		panel.hide()
+	else:
+		panel.show()
+
+
 func _on_Title_toggled(button_pressed: bool) -> void:
 	if button_pressed:
-		GlobalTween.fold_panel(panel, true, 40)
+		title.icon = preload("res://Assets/GuiTreeArrowDown.svg")
+		GlobalTween.fold_panel(panel, true)
 		GlobalTween.make_tween(
 			panel, "modulate:a",
 			0, 1,
 			0.5,
 			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
-		once = false
-		title.icon = preload("res://Assets/GuiTreeArrowDown.svg")
 	else:
-		GlobalTween.fold_panel(self, false, 40)
+		title.icon = preload("res://Assets/GuiTreeArrowRight.svg")
+		GlobalTween.fold_panel(panel, false)
 		GlobalTween.make_tween(
 			panel, "modulate:a",
 			1, 0,
 			0.5,
 			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
-		once = false
-		title.icon = preload("res://Assets/GuiTreeArrowRight.svg")
 
 
 func _on_Name_text_changed(new_text: String) -> void:

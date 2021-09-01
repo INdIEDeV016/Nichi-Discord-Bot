@@ -28,7 +28,7 @@ func make_tween(
 	yield(self, "tween_all_completed")
 
 
-func fold_panel(control: Control, visible: bool, folded_size: float) -> void:
+func fold_panel(control: Control, visible: bool, folded_size: float = 0) -> void:
 	if visible:
 # warning-ignore:return_value_discarded
 		interpolate_property(
@@ -37,13 +37,29 @@ func fold_panel(control: Control, visible: bool, folded_size: float) -> void:
 			0.5,
 			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
+# warning-ignore:return_value_discarded
+		interpolate_property(
+			control, "rect_scale:y",
+			0, 1,
+			0.5,
+			Tween.TRANS_QUART, Tween.EASE_OUT
+		)
 	else:
+# warning-ignore:return_value_discarded
 		interpolate_property(
 			control, "rect_min_size:y",
 			control.rect_size.y, folded_size,
 			0.5,
 			Tween.TRANS_QUART, Tween.EASE_OUT
 		)
+# warning-ignore:return_value_discarded
+		interpolate_property(
+			control, "rect_scale:y",
+			1, 0,
+			0.5,
+			Tween.TRANS_QUART, Tween.EASE_OUT
+		)
+# warning-ignore:return_value_discarded
 	start()
 	yield(self, "tween_all_completed")
 

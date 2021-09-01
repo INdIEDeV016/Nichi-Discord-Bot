@@ -16,6 +16,8 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Add" type="Button" parent="VBoxContainer"]
 margin_left = 990.0
@@ -56,12 +58,14 @@ margin_top = 279.0
 margin_right = 1010.0
 margin_bottom = 303.0
 placeholder_text = "Option Name"
+caret_blink = true
 
 [node name="LineEdit2" type="LineEdit" parent="VBoxContainer"]
 margin_top = 307.0
 margin_right = 1010.0
 margin_bottom = 331.0
 placeholder_text = "Description"
+caret_blink = true
 
 [node name="Choices" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 335.0

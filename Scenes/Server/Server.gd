@@ -1,9 +1,9 @@
 extends Control
 
 
-export var channel_button_scene = preload("res://Scenes/Server/channel_button.tscn")
-export var member_button_scene = preload("res://Scenes/Server/member_button.tscn")
-export var message_scene = preload("res://Scenes/Server/message.tscn")
+export var channel_button_scene = preload("res://Scenes/Server/Channel/channel_button.tscn")
+export var member_button_scene = preload("res://Scenes/Server/Member/member_button.tscn")
+export var message_scene = preload("res://Scenes/Server/Message/message.tscn")
 
 var guild: Guild
 var bot: DiscordBot

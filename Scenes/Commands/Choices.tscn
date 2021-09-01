@@ -45,6 +45,7 @@ margin_right = 295.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.48
+caret_blink = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 64.0
@@ -66,3 +67,4 @@ margin_right = 295.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.48
+caret_blink = true
