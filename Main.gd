@@ -13,9 +13,27 @@ onready var server_nodes = tab_container.get_node("Servers")
 
 var servers: Dictionary = {}
 
+var config_path = "user://config.cfg"
+
 func _ready() -> void:
 	bot_node.VERBOSE = true
 	tab_container.current_tab = 1
+	var file = File.new()
+	if !file.file_exists(config_path):
+		tab_container.current_tab = 1
+	else:
+		setup_bot(config_path)
+		tab_container.current_tab = 2
+
+	
+func setup_bot(file_path):
+	var f = ConfigFile.new()
+	f.load(file_path)
+	bot_node.INTENTS = f.get_value("Main", "Intents", 32383)
+	bot_node.login(f.get_value("Main", "BotToken", ""), f.get_value("Main", "ApplicationID", ""))
+
+
+
 
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
@@ -24,6 +42,16 @@ func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 	var servers: Array = []
 	for guild in bot.guilds:
 		servers.append(bot.guilds[guild].name)
+	var f = ConfigFile.new()
+	f.load(config_path)
+	bot_node.set_presence({
+		"status": f.get_value("Main", "Status", "idle"),
+		"afk": f.get_value("Main", "AFK", false),
+		"activity": {
+			"type": f.get_value("Main", "Type", "listening"),
+			"name": f.get_value("Main", "Name", "you. Please be sane!"),
+		}
+	})
 	print("Ready on %s servers (guilds): %s and %s channels" % [bot.guilds.size(), servers,  bot.channels.size()])
 	
 #	bot_node.add_application_commands(

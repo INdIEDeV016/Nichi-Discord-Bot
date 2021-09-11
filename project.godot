@@ -132,7 +132,7 @@ window/size/test_height=900
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SmoothScroll/plugin.cfg", "res://addons/discord_gd/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/discord_gd/plugin.cfg" )
 
 [gdnative]
 
