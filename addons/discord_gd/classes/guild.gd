@@ -44,7 +44,7 @@ var channels_dict: Dictionary
 func _init(guild: Dictionary) -> void:
 	for property in guild:
 		set(property, guild[property])
-	
+
 	for channel in channels:
 		channels_dict[channel.id] = channel
 
@@ -59,7 +59,7 @@ func get_channel(bot, channel_id):
 
 func get_members(bot, limit: int = 1000, after: int = 0) -> Array:
 	var members: Array = yield(bot._send_get("/guilds/%s/members" % id + "?limit=%d&after=%d" % [limit, after]), "completed")
-	
+
 	for member in members:
 		member.user = User.new(bot, member.user)
 	return members

@@ -21,9 +21,7 @@ static func is_valid_str(value) -> bool:
 
 # Return a ISO 8601 timestamp as a String
 static func make_iso_string(datetime: Dictionary = OS.get_datetime(true)) -> String:
-	var iso_string = '%s-%02d-%02dT%02d:%02d:%02d' % [datetime.year, datetime.month, datetime.day, datetime.hour, datetime.minute, datetime.second]
-
-	return iso_string
+	return '%s-%02d-%02dT%02d:%02d:%02d' % [datetime.year, datetime.month, datetime.day, datetime.hour, datetime.minute, datetime.second]
 
 static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: bool = false):
 	if airport_time:
@@ -35,9 +33,9 @@ static func get_time(datetime: Dictionary = OS.get_datetime(), airport_time: boo
 			return "%0d:%0d AM" % [datetime.hour, datetime.minute]
 
 # Pretty prints a Dictionary
-static func print_dict(d) -> String:
+static func print_dict(d, alphabetical: bool = false) -> String:
 #	print(JSON.print(d, '\t'))
-	return JSON.print(d, '\t', true)
+	return JSON.print(d, '\t', alphabetical)
 
 
 # Saves a Dictionary to a file for debugging large dictionaries
@@ -62,3 +60,10 @@ static func to_image_texture(image: Image) -> ImageTexture:
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
 	return texture
+
+static func get_siblings(node: Node, size: int = 1) -> Array:
+	var child_above = node.get_parent().get_child((node.get_index() - size) if node.get_index() - size > 0 else 0)
+	var child_below = node.get_parent().get_child((node.get_index() + size) if node.get_index() + size < node.get_parent().get_child_count() - 1 else node.get_parent().get_child_count() - 1)
+	var child_first = node.get_parent().get_child(0)
+	var child_last = node.get_parent().get_child(node.get_parent().get_child_count() - 1)
+	return [child_above if child_above != null else child_last, node, child_below if child_below != null else child_first]

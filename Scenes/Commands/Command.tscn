@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/Commands/Options.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/GuiTreeArrowDown.svg" type="Texture" id=2]
 [ext_resource path="res://Scenes/Commands/Command.gd" type="Script" id=3]
 
@@ -26,7 +25,8 @@ __meta__ = {
 
 [node name="Title" type="Button" parent="."]
 margin_right = 1024.0
-margin_bottom = 20.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 toggle_mode = true
@@ -37,8 +37,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Delete" type="Button" parent="Title"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -77.0
+mouse_default_cursor_shape = 2
+text = "- Delete - "
+clip_text = true
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Panel" type="PanelContainer" parent="."]
-margin_top = 24.0
+margin_top = 34.0
 margin_right = 1024.0
 margin_bottom = 600.0
 rect_clip_content = true
@@ -53,7 +66,7 @@ __meta__ = {
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 1019.0
-margin_bottom = 571.0
+margin_bottom = 561.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -61,9 +74,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name" type="LineEdit" parent="Panel/VBoxContainer"]
+[node name="Id" type="RichTextLabel" parent="Panel/VBoxContainer"]
 margin_right = 1014.0
-margin_bottom = 24.0
+margin_bottom = 15.0
+focus_mode = 2
+bbcode_enabled = true
+fit_content_height = true
+selection_enabled = true
+
+[node name="Name" type="LineEdit" parent="Panel/VBoxContainer"]
+margin_top = 19.0
+margin_right = 1014.0
+margin_bottom = 43.0
 placeholder_text = "Name"
 caret_blink = true
 __meta__ = {
@@ -71,21 +93,80 @@ __meta__ = {
 }
 
 [node name="Description" type="LineEdit" parent="Panel/VBoxContainer"]
-margin_top = 28.0
+margin_top = 47.0
 margin_right = 1014.0
-margin_bottom = 52.0
+margin_bottom = 71.0
 placeholder_text = "Description"
 caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Options" parent="Panel/VBoxContainer" instance=ExtResource( 1 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 56.0
+[node name="OptionButton" type="OptionButton" parent="Panel/VBoxContainer"]
+margin_top = 75.0
 margin_right = 1014.0
-margin_bottom = 566.0
+margin_bottom = 95.0
+text = "CHAT_INPUT"
+items = [ "CHAT_INPUT", null, false, 0, null, "USER", null, false, 1, null, "MESSAGE", null, false, 2, null ]
+selected = 0
+
+[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer"]
+margin_top = 99.0
+margin_right = 1014.0
+margin_bottom = 123.0
+pressed = true
+text = "Default Permissions"
+
+[node name="GuildID" type="LineEdit" parent="Panel/VBoxContainer"]
+margin_top = 127.0
+margin_right = 1014.0
+margin_bottom = 151.0
+placeholder_text = "Guild ID"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 155.0
+margin_right = 1014.0
+margin_bottom = 175.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_right = 940.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 13.53
+text = "Options"
+valign = 1
+
+[node name="Add" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 944.0
+margin_right = 1014.0
+margin_bottom = 20.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+ Add +"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+margin_top = 179.0
+margin_right = 1014.0
+margin_bottom = 183.0
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 187.0
+margin_right = 1014.0
+margin_bottom = 187.0
 
 [connection signal="toggled" from="Title" to="." method="_on_Title_toggled"]
+[connection signal="pressed" from="Title/Delete" to="." method="_on_Delete_pressed"]
+[connection signal="mouse_entered" from="Panel" to="." method="_on_Panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel" to="." method="_on_Panel_mouse_exited"]
 [connection signal="text_changed" from="Panel/VBoxContainer/Name" to="." method="_on_Name_text_changed"]
+[connection signal="text_changed" from="Panel/VBoxContainer/Description" to="." method="_on_Description_text_changed"]
+[connection signal="item_selected" from="Panel/VBoxContainer/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="toggled" from="Panel/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="text_changed" from="Panel/VBoxContainer/GuildID" to="." method="_on_GuildID_text_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Add" to="." method="_on_Add_pressed"]

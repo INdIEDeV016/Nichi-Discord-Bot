@@ -20,47 +20,16 @@ func _ready() -> void:
 
 func _on_DiscordBot_bot_ready(bot: DiscordBot) -> void:
 	print("Logged in as |%s#%s|" % [bot.user.username, bot.user.discriminator])
-	
+
 	var servers: Array = []
 	for guild in bot.guilds:
 		servers.append(bot.guilds[guild].name)
 	print("Ready on %s servers (guilds): %s and %s channels" % [bot.guilds.size(), servers,  bot.channels.size()])
-	
-#	bot_node.add_application_commands(
-#		{
-#			'name': 'kill',
-#			'description': 'This is a server Kill Switch. Only to be used by server owner!',
-#			'type': 1,
-#			'options': [
-#				{
-#					'name': 'name',
-#					'type': 3,
-#					'description': 'no description',
-#					'required': true,
-#					'choices': [
-#						{
-#							'name': 'NoName',
-#							'value': 'NoValue'
-#						}
-#					]
-#				}
-#			],
-#			'default_permission': false
-#		},
-#		"816329865132900352"
-#	)
 
 
 func _on_DiscordBot_event(_Wbot, event) -> void:
 	console.text += Helpers.print_dict(event if not null else "")
 
-
-func _on_DiscordBot_guild_create(bot: DiscordBot, guild: Guild) -> void:
-	var server = server_scene.instance()
-	server.guild = guild
-	server.bot = bot
-	servers[guild.id] = server
-	server_nodes.get_node("TabContainer").add_child(server)
 
 
 func _on_DiscordBot_interaction_create(bot, interaction: DiscordInteraction) -> void:
@@ -74,3 +43,29 @@ func _on_DiscordBot_message_create(bot, message, channel: Channel, guild: Guild)
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		get_tree().quit()
+
+
+func _on_DiscordBot_guild(bot, type: String, guild: Guild) -> void:
+	match type:
+		"CREATE":
+			var server = server_scene.instance()
+			server.guild = guild
+			server.bot = bot
+			servers[guild.id] = server
+			server_nodes.get_node("TabContainer").add_child(server)
+		"EDIT":
+			pass
+		"DELETE":
+			server_nodes.get_node("TabContainer/%s" % guild.name).queue_free()
+		_:
+			var server = server_scene.instance()
+			server.guild = guild
+			server.bot = bot
+			servers[guild.id] = server
+			server_nodes.get_node("TabContainer").add_child(server)
+
+
+func _on_DiscordBot_guild_role(bot, type, guild) -> void:
+	match type:
+		"CREATE":
+			server_nodes.get_node("TabContainer")

@@ -65,8 +65,11 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 
+[connection signal="bot_ready" from="DiscordBot" to="TabContainer/Servers" method="_on_DiscordBot_bot_ready"]
+[connection signal="bot_ready" from="DiscordBot" to="TabContainer/Commands" method="_on_DiscordBot_bot_ready"]
 [connection signal="bot_ready" from="DiscordBot" to="." method="_on_DiscordBot_bot_ready"]
 [connection signal="event" from="DiscordBot" to="." method="_on_DiscordBot_event"]
-[connection signal="guild_create" from="DiscordBot" to="." method="_on_DiscordBot_guild_create"]
+[connection signal="guild" from="DiscordBot" to="." method="_on_DiscordBot_guild"]
+[connection signal="guild_role" from="DiscordBot" to="." method="_on_DiscordBot_guild_role"]
 [connection signal="interaction_create" from="DiscordBot" to="." method="_on_DiscordBot_interaction_create"]
 [connection signal="message_create" from="DiscordBot" to="." method="_on_DiscordBot_message_create"]

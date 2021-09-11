@@ -2,13 +2,13 @@
 
 [ext_resource path="res://Scenes/Config.gd" type="Script" id=1]
 
-[node name="Config" type="Control"]
+[node name="Config" type="Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+tab_align = 0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
@@ -55,6 +55,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Bot Token here...."
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsContainer"]
 margin_top = 49.0
@@ -82,6 +84,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Application ID here...."
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="SettingsContainer"]
 margin_top = 98.0
@@ -109,6 +113,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Intents here...."
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="HSeparator" type="HSeparator" parent="SettingsContainer"]
 margin_top = 148.0
@@ -260,6 +266,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.98
 placeholder_text = "Value here...."
+caret_blink = true
+caret_blink_speed = 0.5
 
 [node name="Configure" type="Button" parent="."]
 anchor_left = 0.5

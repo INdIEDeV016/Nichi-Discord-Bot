@@ -1,4 +1,4 @@
-  
+
 class_name Message
 """
 Represents a Discord Message
@@ -169,7 +169,7 @@ func _to_string(pretty: bool = false):
 		'message_reference': message_reference,
 		'referenced_message': referenced_message,
 	}
-	
+
 	return JSON.print(data, '\t', true) if pretty else JSON.print(data, '', true)
 
 func print():

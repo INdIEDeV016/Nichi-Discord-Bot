@@ -26,8 +26,8 @@ var users = {}
 # Signals
 signal event(bot, event)
 signal bot_ready(bot) # bot: DiscordBot
-signal guild_create(bot, guild) # bot: DiscordBot, guild: Dictionary
-signal guild_delete(bot, guild) # bot: DiscordBot, guild: Dictionary
+signal guild(bot, type, guild) # bot: DiscordBot, guild: Dictionary
+signal guild_role(bot, type, guild) # bot: DiscordBot, guild: Dictionary
 signal message_create(bot, message, channel, guild) # bot: DiscordBot, message: Message, channel: Dictionary
 signal message_delete(bot, message) # bot: DiscordBot, message: Dictionary
 signal interaction_create(bot, interaction) # bot: DiscordBot, interaction: DiscordInteraction
@@ -122,7 +122,7 @@ func login(token: String, app_id: String = '') -> void:
 				print('Login Error: Unavailable')
 			FAILED:
 				print('Login Error: Failed (Generic)')
-	
+
 	_logged_in = true
 	return
 
@@ -197,27 +197,27 @@ func add_application_commands(p_options: Dictionary, guild_id: String = ""):
 		]
 		}
 	"""
-	
+
 	var new_command = {
 		'name': '',
 		'type': APPLICATION_COMMAND_TYPE[0],
 		'description': '',
 		'options': []
 	}
-	
+
 	assert(p_options, 'Missing options for set_application_commands')
 	assert(p_options is Dictionary, 'Invalid Type: options in set_application_command must be a Dictionary')
-	
+
 	if p_options.has('name') and Helpers.is_valid_str(p_options.name):
 		new_command.name = p_options.name
-	
+
 #	if p_options.has('type') and Helpers.is_valid_str(p_options.type):
 #		assert(p_options.type.to_upper() in APPLICATION_COMMAND_TYPE, 'Invalid Type: status must be one of APPLICATION_COMMAND_TYPE')
 	new_command.type = p_options.type
-	
+
 	if p_options.has('description') and Helpers.is_valid_str(p_options.description):
 		new_command.description = p_options.description
-	
+
 	if not p_options.options.empty():
 		for option in p_options.options:
 			assert(Helpers.is_valid_str(option.name), 'Name doesn\'t have a valid String: %s' % option)
@@ -231,12 +231,24 @@ func add_application_commands(p_options: Dictionary, guild_id: String = ""):
 					assert(choice.name, "No name provided of the choice: %s" % choice)
 					assert(choice.value, "No value provided of the choice: %s" % choice)
 		new_command.options = p_options.options
-	
+
 	assert(APPLICATION_ID, 'No APPLICATION_ID set!')
+
+	var command: Dictionary
 	if guild_id:
-		_send_request('/applications/%s/guilds/%s/commands' % [APPLICATION_ID, guild_id], new_command)
+		command = yield(_send_request('/applications/%s/guilds/%s/commands' % [APPLICATION_ID, guild_id], new_command), "completed")
 	else:
-		_send_request('/applications/%s/commands' % APPLICATION_ID, new_command)
+		command = yield(_send_request('/applications/%s/commands' % APPLICATION_ID, new_command), "completed")
+	return command
+
+func bulk_overwrite_app_commands(commands: Array):
+	return yield(_send_request('/applications/%s/commands' % APPLICATION_ID, commands), "completed")
+
+func delete_application_command(command_id: String, guild_id: String = ""):
+	if guild_id:
+		_send_request('/applications/%s/guilds/%s/commands/%s' % [APPLICATION_ID, guild_id, command_id], {}, HTTPClient.METHOD_DELETE)
+	else:
+		_send_request('/applications/%s/commands/%s' % [APPLICATION_ID, command_id], {}, HTTPClient.METHOD_DELETE)
 
 func set_presence(p_options: Dictionary) -> void:
 	"""
@@ -422,146 +434,146 @@ func _handle_events(dict: Dictionary) -> void:
 	match event_name:
 		'HELLO':
 			pass
-		
+
 		'READY':
 			_sess_id = dict.d.session_id
 			var d = dict.d
-			
+
 			var _application = d.application
 			var _guilds = d.guilds
 			_clean_guilds(_guilds)
-			
+
 			var _user: User = User.new(self, d.user)
 			user = _user
 			application = _application
-			
+
 			for guild in _guilds:
 				guilds[guild.id] = guild
-		
-		
+
+
 			# bot_ready is emitted after guilds are loaded
 			#emit_signal('bot_ready', self)
-		
+
 		'RESUMED':
 			if VERBOSE:
 				print('Session Resumed')
-		
+
 		'RECONNECT':
 			pass
-		
+
 		'INVALID_SESSION':
 			pass
-		
+
 		'APPLICATION_COMMAND_CREATE':
 			pass
-		
+
 		'APPLICATION_COMMAND_UPDATE':
 			pass
-		
+
 		'APPLICATION_COMMAND_DELETE':
 			pass
-		
+
 		'CHANNEL_CREATE':
 			var channel = dict.d
-		
+
 		'CHANNEL_UPDATE':
 			pass
-		
+
 		'CHANNEL_DELETE':
 			pass
-		
+
 		'CHANNEL_PINS_UPDATE':
 			pass
-		
+
 		'THREAD_CREATE':
 			pass
-		
+
 		'THREAD_UPDATE':
 			pass
-		
+
 		'THREAD_DELETE':
 			pass
-		
+
 		'THREAD_LIST_SYNC':
 			pass
-		
+
 		'THREAD_MEMBER_UPDATE':
 			pass
-		
+
 		'THREAD_MEMBERS_UPDATE':
 			pass
-		
+
 		'GUILD_CREATE':
 			var guild = dict.d
 			_clean_guilds([guild])
-			emit_signal('guild_create', self, Guild.new(guild))
-			
+			emit_signal('guild', self, "CREATE", Guild.new(guild))
+
 			# update cache
 			guilds[guild.id] = guild
-			
+
 			# update number of cached guilds
 			if guild.has('lazy') and guild.lazy:
 				guilds_loaded += 1
 				if guilds_loaded == guilds.size():
 					emit_signal('bot_ready', self)
-			
+
 			for channel in guild.channels:
 				channel.guild_id = guild.id
 				channels[channel.id] = channel
-		
+
 		'GUILD_UPDATE':
 			pass
-		
+
 		'GUILD_DELETE':
-			var guild = dict.d
+			var guild: Guild = Guild.new(dict.d)
 			guilds.erase(guild.id)
-			emit_signal('guild_delete', self, guild.id)
-		
+			emit_signal('guild', self, "DELETE", guild)
+
 		'GUILD_BAN_ADD':
 			pass
-		
+
 		'GUILD_BAN_REMOVE':
 			pass
-		
+
 		'GUILD_EMOJIS_UPDATE':
 			pass
-		
+
 		'GUILD_STICKER_UPDATE':
 			pass
-		
+
 		'GUILD_INTEGRATIONS_UPDATE':
 			pass
-		
+
 		'GUILD_MEMBER_ADD':
 			pass
-		
+
 		'GUILD_MEMBER_REMOVE':
 			pass
-		
+
 		'GUILD_MEMBER_UPDATE':
 			pass
-		
+
 		'GUILD_MEMBERS_CHUNK':
 			pass
-		
+
 		'GUILD_ROLE_CREATE':
 			pass
-		
+
 		'GUILD_ROLE_UPDATE':
 			pass
-		
+
 		'GUILD_ROLE_DELETE':
 			pass
-		
+
 		'INTEGRATION_CREATE':
 			pass
-		
+
 		'INTEGRATION_UPDATE':
 			pass
-		
+
 		'INTEGRATION_DELETE':
 			pass
-		
+
 		'INTERACTION_CREATE':
 			var d = dict.d
 			var type = INTERACTION_TYPES[str(d.type)]
@@ -590,24 +602,24 @@ func _handle_events(dict: Dictionary) -> void:
 			# Send an ACK response
 			#_send_request('/interactions/%s/%s/callback' % [id, token], payload)
 
-		
+
 		'INVITE_CREATE':
 			pass
-		
+
 		'INVITE_DELETE':
 			pass
-		
+
 		'MESSAGE_CREATE':
 			var d = dict.d
-			
+
 			# Dont respond to webhooks
 			if d.has('webhook_id') and d.webhook_id:
 				return
-			
+
 			if d.has('sticker_items') and d.sticker_items and typeof(d.sticker_items) == TYPE_ARRAY:
 				if d.sticker_items.size() != 0:
 					return
-			
+
 			var coroutine = _parse_message(d)
 			if typeof(coroutine) == TYPE_OBJECT:
 				coroutine = yield(coroutine, 'completed')
@@ -615,21 +627,21 @@ func _handle_events(dict: Dictionary) -> void:
 					# message might be a thread
 					# TODO: Handle sending messages in threads
 					return
-			
+
 			d = Message.new(self, dict.d)
 			var guild
 			var channel = Channel.new(channels.get(str(d.channel_id)))
 			if d.guild_id:
 				guild = Guild.new(guilds.get(str(d.guild_id)))
 			emit_signal('message_create', self, d, channel, guild)
-		
+
 		'MESSAGE_DELETE':
 			var d = dict.d
 			emit_signal('message_delete', self, d)
-		
+
 		'PRESENCE_UPDATE':
 			pass
-		
+
 		'TYPING_START':
 			var dictionary = dict.d
 			emit_signal("typing_start", self, dictionary)
@@ -722,7 +734,7 @@ func _send_raw_request(slug: String, payload: Dictionary, method = HTTPClient.ME
 	else:
 		assert(false, 'Unable to upload file. Got empty response from server')
 
-func _send_request(slug: String, payload: Dictionary, method = HTTPClient.METHOD_POST):
+func _send_request(slug: String, payload, method = HTTPClient.METHOD_POST):
 	var headers = _headers.duplicate(true)
 
 	var json_header = 'Content-Type: application/json'

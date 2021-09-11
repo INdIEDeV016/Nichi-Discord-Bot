@@ -2,13 +2,15 @@
 
 [ext_resource path="res://Scenes/Server/servers_tab.gd" type="Script" id=1]
 
-[node name="Servers" type="Control"]
+[node name="Servers" type="Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -20,6 +22,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
+drag_to_rearrange_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

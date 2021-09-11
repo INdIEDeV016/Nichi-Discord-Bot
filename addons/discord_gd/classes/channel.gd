@@ -45,7 +45,7 @@ static func create_message(bot, payload: Dictionary, channel_id: String):
 #		"components": message.components,
 #		"sticker_ids": message.sticker_ids
 #	}
-	
+
 	return yield(bot._send_request("/channels/%s/messages" % channel_id, payload), "completed")
 
 
@@ -64,21 +64,21 @@ static func edit_message(bot, message_id: String, channel_id: String, payload: D
 #		"attachments": message.attachments,
 #		"components": message.components
 #	}
-	
+
 	return yield(bot._send_request("/channels/%s/messages/%s" % [channel_id, message_id], payload, HTTPClient.METHOD_PATCH), "completed")
 
 
 static func get_message(bot, message_id: String, channel_id: String) -> Message:
 	return Message.new(bot, yield(bot._send_get("/channels/%s/messages/%s" % [channel_id, message_id]), "completed"))
-		
+
 
 static func get_messages(bot, channel_id: String, before: String, limit: int = 100) -> Array:
 	var message_array: Array = yield(bot._send_get("/channels/%s/messages" % channel_id + "?before=%s&limit=%s" % [before, limit]), "completed")
-	
+
 	var message_object_array: Array
 	for message in message_array:
 		var message_object = Message.new(bot, message)
 		message_object_array.append(message_object)
-	
+
 	message_object_array.invert()
 	return message_object_array

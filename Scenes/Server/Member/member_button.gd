@@ -18,12 +18,12 @@ func _ready() -> void:
 func set_member(value: Dictionary) -> void:
 	member = value
 	name = member.user.id
-	
+
 	if member.has("nick") and member.nick:
 		text = member.nick
 	else:
 		text = member.user.username
-	
+
 	var dict = member
 	hint_tooltip = Helpers.print_dict(dict)
 

@@ -28,7 +28,7 @@ func _ready() -> void:
 	adjust_text_nodes()
 	placeholder.text = placeholder_text
 	main_text.text = text
-	
+
 	for button in $PanelContainer/HBoxContainer.get_children():
 		if button is TextureButton:
 			button.connect("pressed", self, "button_clicked", [button])
@@ -41,24 +41,24 @@ func adjust_text_nodes():
 	var line_height: int = get_constant("line_spacing", "TextEdit") + get_font("font", "TextEdit").height
 	height = line_height * total_lines + (bottom_margin * 2)
 #	print(height)
-	
+
 	var old_height: float = rect_min_size.y
-	
+
 	if rect_min_size.y < line_height * max_visible_lines + (bottom_margin * 2):
 		rect_min_size.y = height
 
 	if rect_min_size.y == old_height:
 		rect_min_size.y += rect_min_size.y - old_height
-	
-	
+
+
 	rect_position.y -= rect_min_size.y - old_height
 	emit_signal("size_changed", rect_min_size.y - old_height)
-	
+
 	if main_text.text.empty():
 		placeholder.show()
 	else:
 		placeholder.hide()
-	
+
 	if rect_min_size.y > height:
 		rect_position.y += line_height
 		rect_min_size.y -= line_height

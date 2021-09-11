@@ -18,12 +18,12 @@ onready var timer = $Timer
 
 func _ready() -> void:
 	name = guild.name
-	
+
 	for channel in guild.channels:
 		var channel_button = channel_button_scene.instance()
 		channel_button.channel = channel
 		channels_container.add_child(channel_button)
-	
+
 	var members = yield(guild.get_members(bot, 1000), "completed")
 	for member in members:
 		yield(get_tree(), "idle_frame")
@@ -33,7 +33,7 @@ func _ready() -> void:
 		member_button.member = member
 #		yield(get_tree(), "idle_frame")
 		members_container.add_child(member_button)
-	
+
 	bot.connect("typing_start", self, "set_typing")
 #	current_channel = guild.channels[0].id
 
@@ -42,14 +42,14 @@ func set_channel(value: String) -> void:
 	current_channel = value
 	for child in messages_container.get_children():
 		child.queue_free()
-	
+
 	var channel: Channel = yield(guild.get_channel(bot, current_channel), "completed")
 	var messages: Array = yield(channel.get_messages(bot, channel.id, channel.last_message_id), "completed")
-	
+
 	for message in messages:
 		yield(get_tree(), "idle_frame")
 		message_recieved(message, channel)
-	
+
 #	var last_message: Message = yield(channel.get_message(bot, channel.last_message_id, channel.id), "completed")
 #	message_recieved(last_message, channel)
 
@@ -64,20 +64,12 @@ func message_recieved(message: Message, channel: Channel):
 #		yield(get_tree(), "idle_frame")
 		if message.author is Dictionary:
 			message.author = User.new(bot, message.author)
-		
+
 		var new_message = message_scene.instance()
 #		var avatar = yield(message.author.get_display_avatar({"size": 128}), "completed")
 		new_message.bot = bot
 		var avatar = yield(message.author.get_display_avatar({size = 128}), "completed")
-		new_message.author = message.author
-		new_message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
-		new_message.content = message.content
-		new_message.name = message.id
-#		var current_time = OS.get_datetime_from_unix_time(int(message.timestamp))
-#		var time_zone = OS.get_time_zone_info()
-#		print(time_zone)
-		
-		new_message.time = "Today at %s" % Helpers.get_time()
+		message.avatar = Helpers.to_image_texture(Helpers.to_png_image(avatar))
 		messages_container.add_child(new_message)
 		new_message.message = message
 #		new_message.get_parent().move_child(new_message, 0)

@@ -2,12 +2,15 @@
 
 [ext_resource path="res://Scenes/Console.gd" type="Script" id=1]
 
-[node name="Console" type="Control"]
+[node name="Console" type="Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 100, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
+tab_align = 0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

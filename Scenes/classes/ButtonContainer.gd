@@ -66,7 +66,7 @@ func _button_toggled(button_pressed: bool, button: Button):
 					current_button.set_block_signals(true)
 					current_button.pressed = true
 					current_button.set_block_signals(false)
-				
+
 	if Engine.editor_hint:
 		return
 	emit_signal("button_toggled", button_pressed, button)

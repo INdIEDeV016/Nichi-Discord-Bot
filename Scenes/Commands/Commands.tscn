@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Commands/Commands.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Commands/Command.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/Quicksand/static/Quicksand-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Fonts/Quicksand/static/Quicksand-Medium.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/NotoColorEmoji-unhinted/NotoColorEmoji.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -10,13 +11,22 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
 
-[node name="Commands" type="Control"]
+[sub_resource type="DynamicFont" id=2]
+size = 22
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+fallback/0 = ExtResource( 4 )
+
+[node name="Commands" type="Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+tab_align = 0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
+"_edit_lock_": true
 }
 
 [node name="Panel" type="Panel" parent="."]
@@ -31,61 +41,106 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Panel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -279.5
-margin_top = 7.41624
-margin_right = 279.5
-margin_bottom = 57.4162
-custom_fonts/font = SubResource( 1 )
-text = "Create your Slash Commands"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 116.0
-margin_top = 68.0
-margin_right = -115.0
-margin_bottom = -68.0
+margin_left = 111.0
+margin_top = 91.0
+margin_right = -120.0
+margin_bottom = -73.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
-margin_right = 390.0
-margin_bottom = 464.0
+[node name="Panel" type="Panel" parent="Panel/HSplitContainer"]
+margin_right = 385.0
+margin_bottom = 426.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HSplitContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Add" type="Button" parent="Panel/HSplitContainer/Panel/VBoxContainer"]
+margin_right = 385.0
+margin_bottom = 24.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "+ Add +"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HSplitContainer/Panel/VBoxContainer"]
+margin_top = 28.0
+margin_right = 385.0
+margin_bottom = 397.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.0
+
+[node name="CommandsContainer" type="VBoxContainer" parent="Panel/HSplitContainer/Panel/VBoxContainer/ScrollContainer"]
+margin_right = 385.0
+margin_bottom = 369.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/ScrollContainer"]
-margin_right = 378.0
-margin_bottom = 608.0
+[node name="Register" type="Button" parent="Panel/HSplitContainer/Panel/VBoxContainer"]
+margin_top = 401.0
+margin_right = 385.0
+margin_bottom = 426.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+text = "Register"
 
-[node name="Command" parent="HSplitContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 378.0
-margin_bottom = 302.0
-
-[node name="Command2" parent="HSplitContainer/ScrollContainer/VBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 306.0
-margin_right = 378.0
-margin_bottom = 608.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer"]
-margin_left = 402.0
-margin_right = 793.0
-margin_bottom = 464.0
+[node name="Structure" type="RichTextLabel" parent="Panel/HSplitContainer"]
+margin_left = 397.0
+margin_right = 783.0
+margin_bottom = 426.0
+focus_mode = 2
+mouse_default_cursor_shape = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
-bbcode_text = "Description"
-text = "Description"
+selection_enabled = true
+
+[node name="Label" type="Label" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -344.0
+margin_right = 344.0
+margin_bottom = 50.0
+custom_fonts/font = SubResource( 1 )
+text = "Create your Slash Commands (Beta)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Warning" type="Label" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -457.5
+margin_top = 50.0
+margin_right = 457.5
+margin_bottom = 78.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "⚠Warning: This is beta stage, bugs ought to occur! There are some known bugs already!⚠"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/HSplitContainer/Panel/VBoxContainer/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="Panel/HSplitContainer/Panel/VBoxContainer/Register" to="." method="_on_Register_pressed"]

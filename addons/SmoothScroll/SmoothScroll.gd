@@ -23,24 +23,24 @@ func _process(delta):
 	var d = delta
 	var bottom_pos = content_node.rect_position.y + content_node.rect_size.y - self.rect_size.y
 	var top_pos = content_node.rect_position.y
-	
+
 	# If overdragged:
 	if bottom_pos < 0 :
 		over_drag_multiplicator_bottom = 1/abs(bottom_pos)*10
 	else:
 		over_drag_multiplicator_bottom = 1
-	
+
 	if top_pos > 0:
 		over_drag_multiplicator_top = 1/abs(top_pos*top_pos)*10
 	else:
 		over_drag_multiplicator_top = 1
-	
-	
+
+
 	v *= 0.9
-	
+
 	if v.length() <= just_stop_under:
 		v = Vector2(0,0)
-	
+
 	if not is_grabbed:
 		if bottom_pos < 0 :
 			v.y = lerp(v.y, -bottom_pos/8, damping)
@@ -104,7 +104,7 @@ func _on_ScrollThumb_gui_input(event):
 		if !event.pressed:
 			scroll_grabbed = false
 			return
-		
+
 		if !scroll_grabbed:
 			scroll_grabbed = true
 			cursor_offset = get_global_mouse_position().y - $ScrollThumb.rect_global_position.y
