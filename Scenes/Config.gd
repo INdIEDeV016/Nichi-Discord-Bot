@@ -25,13 +25,7 @@ func _on_Configure_pressed() -> void:
 		if child.get_child(1) is CheckBox:
 			settings[child.get_node("Label").text.replace(":", "")] = child.get_node("CheckBox").pressed
 		if child.get_child(1) is OptionButton:
-<<<<<<< HEAD
-			settings[child.get_node("Label").text] = child.get_node("OptionButton").text.to_lower()
-
-=======
 			settings[child.get_node("Label").text.replace(":", "")] = child.get_node("OptionButton").text.to_lower()
-	
->>>>>>> f439a9e6f704b132ddf8472efadcefeed9a16bfa
 	for key in settings:
 		if not settings[key]:
 			f.set_value("Main", key, settings[key])
@@ -42,13 +36,7 @@ func _on_Configure_pressed() -> void:
 		var refined_key = key.replace(":", "")
 		settings[refined_key] = f.get_value("Main", key)
 	owner.bot_node.INTENTS = settings.Intents if settings.has("Intents") else 32383
-<<<<<<< HEAD
-	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text, ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text, ""))
-	get_parent().current_tab = 2
-	yield(owner.bot_node, "bot_ready")
-=======
 	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text.replace(":", ""), ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text.replace(":", ""), ""))
->>>>>>> f439a9e6f704b132ddf8472efadcefeed9a16bfa
 	owner.bot_node.set_presence({
 		"status": settings.Status if settings.has("Status") else "idle",
 		"afk": settings.AFK if settings.has("AFK") else false,
@@ -57,3 +45,4 @@ func _on_Configure_pressed() -> void:
 			"name": settings.Name if settings.has("Name") else "you. Please be sane!",
 		}
 	})
+	get_parent().current_tab = 2
