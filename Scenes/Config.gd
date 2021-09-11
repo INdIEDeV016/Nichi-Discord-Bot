@@ -18,23 +18,37 @@ func _ready() -> void:
 func _on_Configure_pressed() -> void:
 #	yield(settings_container, "ready")
 	for child in settings_container.get_children():
+		if !child.get_child_count():
+			continue
 		if child.get_child(1) is LineEdit and not child.get_node("LineEdit").text.empty():
-			settings[child.get_node("Label").text] = child.get_node("LineEdit").text
+			settings[child.get_node("Label").text.replace(":", "")] = child.get_node("LineEdit").text
 		if child.get_child(1) is CheckBox:
-			settings[child.get_node("Label").text] = child.get_node("CheckBox").pressed
+			settings[child.get_node("Label").text.replace(":", "")] = child.get_node("CheckBox").pressed
 		if child.get_child(1) is OptionButton:
+<<<<<<< HEAD
 			settings[child.get_node("Label").text] = child.get_node("OptionButton").text.to_lower()
 
+=======
+			settings[child.get_node("Label").text.replace(":", "")] = child.get_node("OptionButton").text.to_lower()
+	
+>>>>>>> f439a9e6f704b132ddf8472efadcefeed9a16bfa
 	for key in settings:
 		if not settings[key]:
 			f.set_value("Main", key, settings[key])
 	f.save(file_path)
 
 	f.load(file_path)
+	for key in f.get_section_keys("Main"):
+		var refined_key = key.replace(":", "")
+		settings[refined_key] = f.get_value("Main", key)
 	owner.bot_node.INTENTS = settings.Intents if settings.has("Intents") else 32383
+<<<<<<< HEAD
 	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text, ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text, ""))
 	get_parent().current_tab = 2
 	yield(owner.bot_node, "bot_ready")
+=======
+	owner.bot_node.login(f.get_value("Main", $SettingsContainer/HBoxContainer/Label.text.replace(":", ""), ""), f.get_value("Main", $SettingsContainer/HBoxContainer2/Label.text.replace(":", ""), ""))
+>>>>>>> f439a9e6f704b132ddf8472efadcefeed9a16bfa
 	owner.bot_node.set_presence({
 		"status": settings.Status if settings.has("Status") else "idle",
 		"afk": settings.AFK if settings.has("AFK") else false,
